@@ -1,0 +1,123 @@
+html,
+body,
+/*#app {*/
+  /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
+  /*-webkit-font-smoothing: antialiased;*/
+  /*-moz-osx-font-smoothing: grayscale;*/
+  /*text-align: center;*/
+  /*color: #2c3e50;*/
+  /*margin-top: 60px;*/
+/*}*/
+/*#header{*/
+  /*background-color: #00d6b2;*/
+  /*width: 100%;*/
+  /*height: 0px;*/
+  /*border: 1px #00d6b2 solid;*/
+  /*border-radius:5px;*/
+  /*margin: 0px 0px 0px 0px;*/
+  /*box-shadow: 5px 5px 5px 5px gray;*/
+/*}*/
+#systemTitle {
+  margin: 0px 0px 0px 0px;
+  font-size: larger;
+  background: #ffffff;
+}
+#userLogin {
+  margin: -30px -100px -20px 1300px;
+}
+#myWenjuan {
+  margin: 60px 0px 50px 20px;
+  font-size: larger;
+}
+#createWenjuanBox {
+  margin:50px 200px 200px 20px;
+  padding-right: 0px;
+  width:260px;
+  height: 200px;
+  border-style:solid;
+  border-width:1px;
+  background-color: #ffffff;
+  color: #a3a3a3;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-size: medium;
+}
+#userWenjuanBox {
+  margin:10px 0px 0px 30px;
+  width:260px;
+  height: 200px;
+  border-style:solid;
+  border-width:1px;
+  background-color: #ffffff;
+  color: #a3a3a3;
+  display: table-cell;
+  vertical-align: middle;
+  display: inline-block;
+  font-size: medium;
+}
+#wenjuanList {
+  margin: -212px 0px 0px 260px;
+}
+#wenjuanBox {
+  margin:0px 0px 0px 20px;
+}
+#wenjuanVue{
+ background: #ffffff;
+}
+#wenjuanImg {
+  width: 260px;
+  height: 100px;
+}
+/*#page {*/
+/*margin:0px 0px 0px 1300px;*/
+/*}*/
+/*#page {*/
+/*margin: 40px auto;*/
+/*margin-top: 150px;*/
+/*}*/
+.page-bar{
+  margin: 5px auto;
+  margin-top: 50px;
+}
+ul,li{
+  margin: 0px;
+  padding: 0px;
+}
+li{
+  list-style:none;
+}
+.page-bar li:first-child>a {
+  margin-left: 0px;
+}
+.page-bar a{
+  border: 1px solid #ddd;
+  text-decoration: none;
+  position: relative;
+  float: left;
+  padding:6px 12px;
+  margin-left:  -1px;
+
+  cursor:pointer;
+  margin-right: 20px;
+}
+.page-bar a:hover{
+  background-color: #eee;
+}
+.page-bar a.banClick{
+  cursor:not-allowed;
+  font-size: medium;
+}
+.page-bar .active a{
+  margin: 0px 0px 0px 0px;
+  color: #fff;
+  cursor: default;
+  background-color: #0b97c4;
+  border-color: #0b97c4;
+}
+.page-bar i {
+  font-style:normal;
+  /*color: #D44950;*/
+  margin: 0px 4px;
+  font-size: 12px;
+}
