@@ -1,17 +1,33 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import VueResource from 'vue-resource'
 import axios from 'axios'
+import VueCookies from 'vue-cookies'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/global.css'
-axios.defaults.baseURL = 'http://localhost:22530'
+import plugin from './js/plugin.js'
+import { Button} from 'element-ui'
+import Router from 'vue-router'
+
+import dropDown from './dropDown/dropDown'
+import dropDownMenu from './dropDown/dropDownMenu'
+import dropDownItem from './dropDown/dropDownItem'
+
+axios.defaults.baseURL = 'http://localhost:8081'
+// axios请求携带cookie
+axios.defaults.withCredentials = true
 global.axios = axios
 Vue.prototype.axios = axios
 Vue.config.productionTip = false
 Vue.use(VueResource)
-/* eslint-disable no-new */
+Vue.use(VueCookies)
+Vue.use(plugin)
+Vue.use(ElementUI)
+Vue.use(Router)
+Vue.component(Button.name, Button)
+
 new Vue({
   el: '#app',
   router,

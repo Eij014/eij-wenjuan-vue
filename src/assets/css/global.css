@@ -17,16 +17,53 @@ body,
   /*margin: 0px 0px 0px 0px;*/
   /*box-shadow: 5px 5px 5px 5px gray;*/
 /*}*/
-#systemTitle {
-  margin: 0px 0px 0px 0px;
+#systemHeader {
+  margin: 10px 0px 0px 0px;
+  height: 40px;
   font-size: larger;
-  background: #ffffff;
+
 }
-#userLogin {
-  margin: -30px -100px -20px 1300px;
+.systemCenter{
+  background-color: #ffffff;
+}
+#img {
+  margin:  0px 0px 0px 20px;
+}
+#title{
+  margin: -40px 0px 0px 60px;
+}
+.userLogin {
+  margin: -30px 0px 0px 1400px;
+  font-size: medium;
+}
+.ptext{
+  width: 0px;
+  height: 0px;
+  margin: -7px 0px 0px -12px;
+  font-size: small;
+}
+.loginButton{
+  width: 5px;
+  height: 5px;
+}
+.loginDialog {
+  padding: 0;
+  width: 480px;
+  height:420px;
+}
+.el-tooltip__popper{
+  max-width:30%
+}
+#userHeader {
+  max-height: 30px;
+  max-width: 30px;
+  margin-top: -10px;
+  margin-bottom: -8px;
+  font-size: small;
+  padding: 0px;
 }
 #myWenjuan {
-  margin: 60px 0px 50px 20px;
+  margin: 43px 0px 50px 20px;
   font-size: larger;
 }
 #createWenjuanBox {
@@ -44,7 +81,7 @@ body,
   font-size: medium;
 }
 #userWenjuanBox {
-  margin:10px 0px 0px 30px;
+  margin: 10.5px 0px 0px 30.5px;
   width:260px;
   height: 200px;
   border-style:solid;
@@ -58,16 +95,23 @@ body,
 }
 #wenjuanList {
   margin: -212px 0px 0px 260px;
+  height: 430px;
+
 }
 #wenjuanBox {
-  margin:0px 0px 0px 20px;
+  width: 1450px;
+  height:450px;
+  margin:0px 0px 0px 50px;
+
 }
-#wenjuanVue{
+.wenjuanVue{
  background: #ffffff;
+ margin:0px 0px 0px 10px;
+ padding: 0px;
 }
 #wenjuanImg {
   width: 260px;
-  height: 100px;
+  height: 110px;
 }
 /*#page {*/
 /*margin:0px 0px 0px 1300px;*/
@@ -78,11 +122,11 @@ body,
 /*}*/
 .page-bar{
   margin: 5px auto;
-  margin-top: 50px;
 }
 ul,li{
-  margin: 0px;
+  margin: 0px 0px 0px 30px;
   padding: 0px;
+
 }
 li{
   list-style:none;
@@ -120,4 +164,122 @@ li{
   /*color: #D44950;*/
   margin: 0px 4px;
   font-size: 12px;
+}
+#bottom {
+  height: 93px;
+}
+.el-dialog{
+   display: flex;
+   flex-direction: column;
+   margin:0 !important;
+   position:absolute;
+   top:50%;
+   left:50%;
+   transform:translate(-50%,-50%);
+     max-height: calc(100% - 30px);
+   max-width: calc(100% - 30px);
+}
+.el-dialog .el-dialog__body{
+   flex:1;
+   overflow: auto;
+}
+
+.question1 {
+  width: 50px;
+  height: 45px;
+  margin: 0px 0px 0px 10px;
+}
+
+.question2 {
+  width: 50px;
+  height: 45px;
+  margin:-45px 0px 8px 70px;
+}
+
+.question3 {
+  width: 50px;
+  height: 45px;
+  margin:-53px 0px 8px 130px;
+}
+.imgCenter{
+  margin:5px 0px 0px 15px;
+}
+#userSetting{
+  width: 50px;
+  height:50px;
+  background-color: #0b97c4;
+}
+#wenjuanEditHeader {
+  margin: -10px 0px 0px 0px;
+  height:50px;
+  background-color: #cc0000;
+}
+#wenjuanPreview {
+   border-style:solid;
+   border-width:1px;
+   width: 80px;
+   height:30px;
+   margin:-20px 0px 0px 1100px;
+   text-align:center;
+ }
+#wenjuanSave{
+  border-style:solid;
+  border-width:1px;
+  width: 120px;
+  height:30px;
+  margin: -34px 0px 0px 1250px;
+  background-color: #a1afc9;
+  text-align:center;
+  line-height: 30px;
+}
+
+
+
+#imgCenter{
+  margin:5px 0px 0px 15px;
+}
+#wenjuanEditCenter {
+  height: 900px;
+  margin: 0 305px 0 205px;
+  background-color: #f2fafe;
+}
+#wenjuanEditCenterLeft{
+  width:204px;
+  height:400px;
+  position:absolute;
+  background-color:#0000ff;
+  margin: 50px 0px 0px 0px;
+  left:0;
+  top:0;
+}
+#wenjuanEditCenterMid {
+  width: 1009px;
+  height:800px;
+  margin:0 0px 0 0px;
+  background-color:#0BB20C;
+}
+#wenjuanEditCenterRight {
+  width: 304px;
+  height: 400px;
+  position: absolute;
+  margin: 50px 0px 0px 1500px;
+  right: 0;
+  top: 0;
+  background-color: #0D3349;
+}
+#questionHeader{
+  width: 810px;
+  margin: -770px 0px 0px 100px;
+  background-color: #ffffff;
+}
+#wenjuanTitleCenter{
+  margin: 0px 0px 0px 250px;
+}
+#questionList{
+   width: 810px;
+   margin: 10px 10px 10px 0px;
+  background-color: #0b97c4;
+}
+#userQuestionBox {
+  margin: 20px 0px 0px 0px;
 }
