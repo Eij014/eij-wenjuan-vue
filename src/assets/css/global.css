@@ -123,6 +123,9 @@ body,
 .page-bar{
   margin: 5px auto;
 }
+p {
+  word-break: break-all;
+}
 ul,li{
   margin: 0px 0px 0px 30px;
   padding: 0px;
@@ -265,7 +268,17 @@ li{
   margin: 50px 0px 0px 1500px;
   right: 0;
   top: 0;
-  background-color: #0D3349;
+  background-color: #00ffff;
+}
+.editControlTitle {
+  height: 30px;
+  color: #cc0000;
+  font-size: 20px;
+  margin: 10px 0px 0px 20px;
+}
+.editName {
+  font-size: 15px;
+  margin: 10px 0px 0px 20px;
 }
 #questionHeader{
   width: 810px;
@@ -280,6 +293,83 @@ li{
    margin: 10px 10px 10px 0px;
   background-color: #0b97c4;
 }
-#userQuestionBox {
-  margin: 20px 0px 0px 0px;
+.userQuestionBox {
+  border-style:solid;
+  border-width:1px;
+  margin: 20px 10px 10px 10px;
+}
+.userQuestion {
+  margin: 0px 0px 0px 25px;
+}
+.horizontalLine {
+  width: 100%;
+  height: 1px;
+  border-top: solid #ACC0D8 1px;
+}
+
+.verticalLine {
+  width: 50px;
+  height: 20%;
+  border-right: solid #ACC0D8 1px;
+}
+
+input{
+  outline-style: none ;
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  padding: 3px 4px;
+  width: 270px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: "Microsoft soft";
+  margin: 8px 0px 0px 15px
+}
+textarea{
+  outline-style: none ;
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  padding: 3px 4px;
+  width: 270px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: "Microsoft soft";
+  margin: 8px 0px 0px 15px
+}
+.el-radio_label {
+    text-overflow: ellipsis;
+    white-space: normal;
+    line-height: 18px;
+    vertical-align: middle;
+    display: inline-block;
+}
+.optionClass{
+  margin: 10px 0px 0px 20px;
+  display:block;
+}
+.optionClassEdit {
+  border-style:solid;
+  border-width:1px;
+  height:30px;
+  width: 280px;
+  margin: 10px 0px 0px 20px;
+  display:block;
+}
+.optionEditInput {
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  height:23px;
+  width: 150px;
+  margin: 0px 0px 0px 0px;
+}
+.addOption{
+  margin: 30px 0px 0px 20px;
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  width: 75px;
+  text-align: center;
+}
+.imgAddOrDelete {
+  margin: 0px 0px 0px 10px;
+  width: 15px;
+  height: 15px;
 }

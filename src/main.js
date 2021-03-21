@@ -5,11 +5,13 @@ import VueResource from 'vue-resource'
 import axios from 'axios'
 import VueCookies from 'vue-cookies'
 import ElementUI from 'element-ui'
+import vSelect from 'vselect-component'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/global.css'
 import plugin from './js/plugin.js'
 import { Button} from 'element-ui'
 import Router from 'vue-router'
+import "babel-polyfill";
 
 import dropDown from './dropDown/dropDown'
 import dropDownMenu from './dropDown/dropDownMenu'
@@ -26,6 +28,7 @@ Vue.use(VueCookies)
 Vue.use(plugin)
 Vue.use(ElementUI)
 Vue.use(Router)
+Vue.use(vSelect)
 Vue.component(Button.name, Button)
 
 new Vue({

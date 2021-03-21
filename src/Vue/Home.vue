@@ -45,7 +45,6 @@
           <el-form-item label= "密码" prop="password">
             <el-input type="password" v-model="registerForm.password" auto-complete="off"></el-input>
           </el-form-item>
-          <span><a  v-on:click="userLogin()">立即登录</a></span>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false; resetForm('registerForm')">取 消</el-button>
@@ -232,17 +231,11 @@
         this.registerDialog = true;
         this.dialogFormVisible = true;
       },
-      userLogin: function() {
-        this.loginDialog = true;
-        this.registerDialog = false;
-        this.dialogFormVisible = true;
-      },
       createWenjuan() {
         console.log('test');
         this.$router.push({name:"EditWenjuan"});
       },
       userLogout() {
-        console.log('userlogout');
         this.$cookies.remove('userToken');
         this.wenjuanList = [];
         this.total = 0;
@@ -322,7 +315,7 @@
         return vue;
       },
       submitForm(loginOrRegister) {
-        var usernameSubmit;
+       var usernameSubmit;
         var passwordSubmit;
         if(loginOrRegister == "login") {
           usernameSubmit = this.loginForm.username;
@@ -360,8 +353,7 @@
           }
         ).then((res) => {
           if (res.data.code == 0) {
-            console.log(res);
-            this.$cookies.set('userToken', res.data.data, 6000000);
+            this.$cookies.set('userToken', res.data.data, 60);
             this.username = this.$cookies.get('userToken').split('-')[1];
             this.wenjuanListFn(1);
             this.dialogFormVisible = false;
