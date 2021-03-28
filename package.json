@@ -18,12 +18,15 @@
     "babel-polyfill": "^6.26.0",
     "element-ui": "^2.15.1",
     "rxjs": "^6.6.6",
+    "video.js": "^7.11.4",
+    "videojs-contrib-hls": "^5.15.0",
     "vue": "^2.6.12",
     "vue-axios": "^3.2.4",
     "vue-cookie": "^1.1.4",
     "vue-cookies": "^1.7.4",
     "vue-resource": "^1.5.2",
     "vue-router": "^3.5.1",
+    "vue-video-player": "^5.0.2",
     "vux": "^2.9.4"
   },
   "devDependencies": {

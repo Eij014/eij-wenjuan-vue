@@ -60,18 +60,21 @@
       <div id="wenjuanBox">
         <div id="createWenjuanBox" @click="createWenjuan()">
           <img id="imageCenter" src="../assets/icon/createWenjuan.png"/>
-          <div id="buttonCreateWenjuan" v-on:click="createWenjuan()">
-            新建问卷
+          <div id="buttonCreateWenjuan" v-on:click="createWenjuan(0)">
+            新建问卷111
           </div>
         </div>
         <div id="wenjuanList">
-          <li v-for="(wenjuan,index) in wenjuanList" id="userWenjuanBox" :key="index">
-            <img id = "wenjuanImg" :src= "wenjuan.imgUrl"/>
-            <a>{{ wenjuan.wenjuanTitle }}</a>
-            <div>回收: {{wenjuan.recyclingNum}}</div>
-            <div v-if="wenjuan.status == 0" style="color:#FFB15B">未发布</div>
-            <div v-if="wenjuan.status == 1" style="color:#47E400">已发布</div>
-            <a>{{getDate(wenjuan.createTime)}}</a>
+          <li v-for="(wenjuan,index) in wenjuanList" id="userWenjuanBox" :key="index"  v-on:click="createWenjuan(wenjuan.wenjuanId)">
+            <div v-on:click="createWenjuan(wenjuan.wenjuanId)">
+                <button v-on:click="createWenjuan(wenjuan.wenjuanId"/>
+                <img id = "wenjuanImg" :src= "wenjuan.imgUrl"/>
+                <a>{{ wenjuan.wenjuanTitle }}</a>
+                <div>回收: {{wenjuan.recyclingNum}}</div>
+                <div v-if="wenjuan.status == 0" style="color:#FFB15B">未发布</div>
+                <div v-if="wenjuan.status == 1" style="color:#47E400">已发布</div>
+                <a>{{getDate(wenjuan.createTime)}}</a>
+            </div>>
           </li>
         </div>
       </div>
@@ -208,13 +211,11 @@
             }
           }
         ).then((res) => {
-          console.log(res);
           this.wenjuanList =  res.data.data.wenjuanList;
           this.total = res.data.data.total;
           this.pageSize = res.data.data.pageSize;
           this.currentPage = res.data.data.currentPage;
           this.totalPage = res.data.data.totalPage;
-          console.log(this.totalPage);
         });
       },
       btnClick:function(data) {
@@ -231,9 +232,11 @@
         this.registerDialog = true;
         this.dialogFormVisible = true;
       },
-      createWenjuan() {
-        console.log('test');
-        this.$router.push({name:"EditWenjuan"});
+      createWenjuan(wenjuanId) {
+        this.$router.push({name:'EditWenjuan',query: {wenjuanId:wenjuanId}});
+      },
+      editWenjuan(wenjuanId) {
+        this.$router.push({name:'EditWenjuan',query: {wenjuanId:wenjuanId}});
       },
       userLogout() {
         this.$cookies.remove('userToken');
@@ -314,6 +317,9 @@
         });
         return vue;
       },
+      editWenjuan(wenjuan) {
+        this.$router.push({name:'home',query: {wenjuanId:wenjuan.wenjuanId}});
+      },
       submitForm(loginOrRegister) {
        var usernameSubmit;
         var passwordSubmit;
@@ -324,21 +330,6 @@
           usernameSubmit = this.registerForm.username;
           passwordSubmit = this.registerForm.password;
         }
-        console.log(usernameSubmit);
-//      this.$refs[formName].validate((valid) => {
-//        if (valid) {
-//          //提交成功做的动作
-//          dialogFormVisible = false;
-//          /* alert('submit!') ; */
-//          this.$message({
-//            type: 'success',
-//            message: '提交成功'
-//          });
-//        } else {
-//          console.log('error submit!!');
-//          return false;
-//        }
-//      });
         this.axios({
             method:'POST',
             url:'/v3/wenjuan/user/login',

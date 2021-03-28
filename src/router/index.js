@@ -5,6 +5,14 @@ import Home from '@/components/Home'
 import App from '@/App'
 Vue.use(Router)
 
+//解决它的提示是 避免到当前位置的冗余导航。 简单来说就是重复触发了同一个路由。
+//个错误是 vur-router更新以后新出现的错误。（我使用的是 vue-router 3.2.0）出现的 但是 （vue-router 3.0.6) 没有出现。 但是也不排除是我的 3.0.6之前做过配置。
+
+const originalPush = Router.prototype.push
+
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 export default new Router({
 
   routes: [
