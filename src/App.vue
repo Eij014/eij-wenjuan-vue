@@ -2,8 +2,10 @@
   <div id = "app">
     <router-view></router-view>
     <div style="width: 200px"></div>
+    <div class="router-liink">
     <router-link to="/home">Go to Home</router-link>
     <router-link to="/EditWenjuan">Go to Edit</router-link>
+    </div>
 
   </div>
 

@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import EditWenjuan from '@/components/EditWenjuan'
+import PreviewWenjuan from '@/components/Preview'
 import Home from '@/components/Home'
+import Publish from '@/components/Publish'
 import App from '@/App'
 Vue.use(Router)
 
@@ -22,14 +24,24 @@ export default new Router({
         componet: App
       },
     {
-      path: '/Home',
+      path: '/home',
       name: 'Home',
       component: Home
     },
     {
-      path: '/EditWenjuan',
+      path: '/editWenjuan',
       name: 'EditWenjuan',
       component: EditWenjuan
+    },
+    {
+      path: '/previewWenjuan',
+      name: 'PreviewWenjuan',
+      component: PreviewWenjuan
+    },
+    {
+      path:'/publish',
+      name:'Publish',
+      component:Publish
     }
   ]
 })

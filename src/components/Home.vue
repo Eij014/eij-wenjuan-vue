@@ -1,34 +1,35 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
-  <div id = "home">
+  <div id="home">
     <div id="systemHeader">
-      <img id = "img" src="../assets/icon/wenjuan-title.png"/>
-      <div id = "title">Eij问卷</div>
-      <div v-if= userStatus() class="userLogin" style="font-size: small" v-on:click="userSettingStatus = true">
+      <img id="img" src="../assets/icon/wenjuan-title.png"/>
+      <div id="title">Eij问卷</div>
+      <div v-if=userStatus() class="userLogin" style="font-size: small" v-on:click="userSettingStatus = true">
         <el-dropdown>
               <span class="el-dropdown-link" ref="echarType">
                {{this.username}}
               </span>
-          <el-dropdown-menu slot="dropdown" >
-            <el-dropdown-item  @click.native="userLogout()">注销</el-dropdown-item>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item @click.native="userLogout()">注销</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-        <img id = "userHeader" src="../assets/icon/header.png"/>
+        <img id="userHeader" src="../assets/icon/header.png"/>
       </div>
       <!--//登录弹窗-->
-      <el-button  v-if= !userStatus() class="userLogin" round @click="dialogFormVisible = true,loginDialog = true">登录</el-button>
+      <el-button v-if=!userStatus() class="userLogin" round @click="dialogFormVisible = true,loginDialog = true">登录
+      </el-button>
       <el-dialog v-if="loginDialog" custom-class="loginDialog" title="登录" :visible.sync="dialogFormVisible" center>
         <el-form>
-          <el-form-item :show-overflow-tooltip=true custom-class="el-tooltip__popper" label= "用户名" prop="username">
-            <el-input id = "usernameLogin" v-model.number="loginForm.username"></el-input>
+          <el-form-item :show-overflow-tooltip=true custom-class="el-tooltip__popper" label="用户名" prop="username">
+            <el-input id="usernameLogin" v-model.number="loginForm.username"></el-input>
           </el-form-item>
-          <el-form-item label= "密码" prop="password">
-            <el-input id = "passwordLogin" type="password" v-model="loginForm.password" auto-complete="off"></el-input>
+          <el-form-item label="密码" prop="password">
+            <el-input id="passwordLogin" type="password" v-model="loginForm.password" auto-complete="off"></el-input>
           </el-form-item>
           <!--<el-form-item label="记住密码" prop="delivery">-->
           <!--<el-switch v-model="loginForm.delivery"></el-switch>-->
           <!--</el-form-item>-->
           <!--<span><a>忘记密码？</a></span>-->
-          <span><a  v-on:click="userRegister()">立即注册</a></span>
+          <span><a v-on:click="userRegister()">立即注册</a></span>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false; resetForm('loginForm')">取 消</el-button>
@@ -39,13 +40,13 @@
       <!--//注册弹窗-->
       <el-dialog v-if="registerDialog" custom-class="loginDialog" title="注册" :visible.sync="dialogFormVisible" center>
         <el-form>
-          <el-form-item :show-overflow-tooltip=true custom-class="el-tooltip__popper" label= "用户名" prop="username">
+          <el-form-item :show-overflow-tooltip=true custom-class="el-tooltip__popper" label="用户名" prop="username">
             <el-input v-model.number="registerForm.username"></el-input>
           </el-form-item>
-          <el-form-item label= "密码" prop="password">
+          <el-form-item label="密码" prop="password">
             <el-input type="password" v-model="registerForm.password" auto-complete="off"></el-input>
           </el-form-item>
-          <span><a  v-on:click="userLogin()">立即登录</a></span>
+          <span><a v-on:click="userLogin()">立即登录</a></span>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false; resetForm('registerForm')">取 消</el-button>
@@ -55,42 +56,45 @@
 
 
     </div>
-    <div class = systemCenter>
+    <div class=systemCenter>
       <div id="myWenjuan">我的问卷</div>
 
       <div id="wenjuanBox">
         <div id="createWenjuanBox" @click="createWenjuan()">
           <img id="imageCenter" src="../assets/icon/createWenjuan.png"/>
-          <div id="buttonCreateWenjuan" v-on:click="createWenjuan()">
+          <div id="buttonCreateWenjuan" v-on:click="createWenjuan(0)">
             新建问卷
           </div>
         </div>
         <div id="wenjuanList">
           <li v-for="(wenjuan,index) in wenjuanList" id="userWenjuanBox" :key="index">
-            <img id = "wenjuanImg" :src= "wenjuan.imgUrl"/>
-            <a>{{ wenjuan.wenjuanTitle }}</a>
-            <div>回收: {{wenjuan.recyclingNum}}</div>
-            <div v-if="wenjuan.status == 0" style="color:#FFB15B">未发布</div>
-            <div v-if="wenjuan.status == 1" style="color:#47E400">已发布</div>
-            <a>{{getDate(wenjuan.createTime)}}</a>
+            <div v-on:click="createWenjuan(wenjuan.wenjuanId)">
+              <img id="wenjuanImg" :src="wenjuan.imgUrl"/>
+              <a>{{ wenjuan.wenjuanTitle }}</a>
+              <div>回收: {{wenjuan.recyclingNum}}</div>
+              <div v-if="wenjuan.status == 0" style="color:#FFB15B">未发布</div>
+              <div v-if="wenjuan.status == 1" style="color:#47E400">已发布</div>
+              <a>{{getDate(wenjuan.createTime)}}</a>
+            </div>
           </li>
         </div>
       </div>
       <div v-if="total > 8" class="page-bar">
         <ul>
           <li v-if="currentPage>1">
-            <a  style="font-size: medium" v-on:click="currentPage--,pageClick()">上一页</a>
+            <a style="font-size: medium" v-on:click="currentPage--,pageClick()">上一页</a>
           </li>
-          <li v-if="currentPage==1" ><a  style="font-size: medium" class="banClick">上一页</a></li>
+          <li v-if="currentPage==1"><a style="font-size: medium" class="banClick">上一页</a></li>
           <li v-for="index in totalPage" style="font-size: medium" v-bind:class="{ 'active' : currentPage == index}">
             <a v-on:click="btnClick(index)">{{ index }}</a>
           </li>
-          <li v-if="currentPage!=totalPage"><a  style="font-size: medium" v-on:click="currentPage++,pageClick()">下一页</a></li>
-          <li v-if="currentPage==totalPage"><a  style="font-size: medium" class="banClick">下一页</a></li>
+          <li v-if="currentPage!=totalPage"><a style="font-size: medium" v-on:click="currentPage++,pageClick()">下一页</a>
+          </li>
+          <li v-if="currentPage==totalPage"><a style="font-size: medium" class="banClick">下一页</a></li>
           <li><a style="font-size: medium">共<i>{{ total }}</i>个</a></li>
         </ul>
       </div>
-      <div id = "bottom"/>
+      <div id="bottom"/>
     </div>
   </div>
 
@@ -120,8 +124,8 @@
           if (!Number.isInteger(value)) {
             callback(new Error('请输入数字值'));
           } else {
-            var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
-            if (!myreg.test(value) ) {
+            var myreg = /^[1][3,4,5,7,8][0-9]{9}$/;
+            if (!myreg.test(value)) {
               callback(new Error('请输入正确的手机号码'));
             } else {
               callback();
@@ -139,22 +143,22 @@
         }
       };
 
-      return{
+      return {
 
-        isShow:true,
-        loginBoxShowStatus:false,
-        loginFormVisible:false,
-        username:'zhuhaojie',
-        userheader:'../assets/icon/header.png',
-        totalPage:0,
-        total:0,
-        pageSize:0,
-        currentPage:0,
-        wenjuanList:[],
-        registerDialog:false, //注册弹窗
+        isShow: true,
+        loginBoxShowStatus: false,
+        loginFormVisible: false,
+        username: 'zhuhaojie',
+        userheader: '../assets/icon/header.png',
+        totalPage: 0,
+        total: 0,
+        pageSize: 0,
+        currentPage: 0,
+        wenjuanList: [],
+        registerDialog: false, //注册弹窗
         loginDialog: false, //登录弹窗
-        userSettingStatus:false,//用户设置
-        loginPower:false,
+        userSettingStatus: false,//用户设置
+        loginPower: false,
         /*插入form方法*/
         /*设定规则指向*/
         loginForm: {
@@ -162,18 +166,18 @@
           username: '',
           delivery: false,
         },
-        registerForm:{
+        registerForm: {
           password: '',
           username: '',
           delivery: false,
         },
         rules2: {
           password: [
-            { validator: validatePass, trigger: 'blur' }
+            {validator: validatePass, trigger: 'blur'}
           ],
 
           username: [
-            { validator: checkNum, trigger: 'blur' }
+            {validator: checkNum, trigger: 'blur'}
           ]
         },
 
@@ -190,35 +194,30 @@
         formLabelWidth: '120px'
       };
     },
-    methods:{
+    methods: {
       wenjuanListFn(index) {
+        console.log(this.$cookies.get('userToken'));
+        console.log('cookie');
         this.axios({
             method:'POST',
-            url:'/v3/wenjuan/list',
-            withCredentials: true,
-            data:{
-              currentPage:index,
-              pageSize:8
+            url:'/wenjuan/list',
+            data: {
+              currentPage: index,
+              pageSize: 8
             },
             header:{
-              'Content-Type':'application/json',
-              'Cookie':{
-                'test':'123',
-                'userToken':this.$cookies.get('userToken')
-              }
+              'Content-Type':'application/json'
             }
           }
         ).then((res) => {
-          console.log(res);
-          this.wenjuanList =  res.data.data.wenjuanList;
+          this.wenjuanList = res.data.data.wenjuanList;
           this.total = res.data.data.total;
           this.pageSize = res.data.data.pageSize;
           this.currentPage = res.data.data.currentPage;
           this.totalPage = res.data.data.totalPage;
-          console.log(this.totalPage);
         });
       },
-      btnClick:function(data) {
+      btnClick: function (data) {
         if (data != this.currentPage) {
           this.currentPage = data;
         }
@@ -232,17 +231,18 @@
         this.registerDialog = true;
         this.dialogFormVisible = true;
       },
-      userLogin: function() {
+      userLogin: function () {
         this.loginDialog = true;
         this.registerDialog = false;
         this.dialogFormVisible = true;
       },
-      createWenjuan() {
-        console.log('test');
-        this.$router.push({name:"EditWenjuan"});
+      createWenjuan(wenjuanId) {
+        this.$router.push({path: '/editWenjuan', query: {wenjuanId: wenjuanId}})
+      },
+      answerWenjuan(wenjuanId) {
+        this.$router.push({path: '/editWenjuan', query: {wenjuanId: wenjuanId}})
       },
       userLogout() {
-        console.log('userlogout');
         this.$cookies.remove('userToken');
         this.wenjuanList = [];
         this.total = 0;
@@ -316,7 +316,7 @@
           },
           components: {
             dialogContent: option.component,
-            dropDown,dropDownMenu,dropDownItem
+            dropDown, dropDownMenu, dropDownItem
           },
         });
         return vue;
@@ -324,14 +324,13 @@
       submitForm(loginOrRegister) {
         var usernameSubmit;
         var passwordSubmit;
-        if(loginOrRegister == "login") {
+        if (loginOrRegister == "login") {
           usernameSubmit = this.loginForm.username;
           passwordSubmit = this.loginForm.password;
         } else {
           usernameSubmit = this.registerForm.username;
           passwordSubmit = this.registerForm.password;
         }
-        console.log(usernameSubmit);
 //      this.$refs[formName].validate((valid) => {
 //        if (valid) {
 //          //提交成功做的动作
@@ -347,20 +346,19 @@
 //        }
 //      });
         this.axios({
-            method:'POST',
-            url:'/v3/wenjuan/user/login',
-            data:{
-              username:usernameSubmit,
+            method: 'POST',
+            url: '/wenjuan/user/login',
+            data: {
+              username: usernameSubmit,
               password: passwordSubmit,
-              loginOrRegister:loginOrRegister
+              loginOrRegister: loginOrRegister
             },
-            header:{
-              'Content-Type':'application/json'
+            header: {
+              'Content-Type': 'application/json'
             }
           }
         ).then((res) => {
           if (res.data.code == 0) {
-            console.log(res);
             this.$cookies.set('userToken', res.data.data, 6000000);
             this.username = this.$cookies.get('userToken').split('-')[1];
             this.wenjuanListFn(1);
@@ -375,25 +373,25 @@
       }
     },
     computed: {
-      indexs:function() {
+      indexs: function () {
         var left = 1;
         var right = this.totalPage;
         var ar = [];
         if (this.allPage >= 5) {
-          if(this.currentPage > 3 && this.cur< this.totalPage - 2) {
+          if (this.currentPage > 3 && this.cur < this.totalPage - 2) {
             left = this.currentPage - 2;
             right = this.currentPage + 2;
           } else {
             if (this.currentPage <= 3) {
               left = 1;
-              right =5;
+              right = 5;
             } else {
               right = this.totalPage;
               left = this.totalPage - 4;
             }
           }
         }
-        while(left <= right) {
+        while (left <= right) {
           ar.push(left);
           left++;
         }

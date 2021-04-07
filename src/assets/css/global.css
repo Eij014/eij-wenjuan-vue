@@ -1,5 +1,5 @@
-html,
-body,
+/*html,*/
+/*body,*/
 /*#app {*/
   /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
   /*-webkit-font-smoothing: antialiased;*/
@@ -35,6 +35,19 @@ body,
 .userLogin {
   margin: -30px 0px 0px 1400px;
   font-size: medium;
+}
+.headerLeft{
+  width: 50%;
+  display: flex;
+}
+.headerCenter {
+  width: 40%;
+
+  display: flex;
+}
+.headerRight {
+  width: 30%;
+  display: flex;
 }
 .ptext{
   width: 0px;
@@ -191,14 +204,24 @@ li{
   width: 50px;
   height: 45px;
   margin: 0px 0px 0px 10px;
+  border:1px solid transparent;
 }
-
+.question1:hover {
+  border-style:solid;
+  border-width:1px;
+  border-color: #ccc;
+}
 .question2 {
   width: 50px;
   height: 45px;
   margin:-45px 0px 8px 70px;
+  border:1px solid transparent;
 }
-
+.question2:hover {
+  border-style:solid;
+  border-width:1px;
+  border-color: #ccc;
+}
 .question3 {
   width: 50px;
   height: 45px;
@@ -214,10 +237,40 @@ li{
   height:50px;
   background-color: #0b97c4;
 }
+#wenjuanEdit{
+  background-color: #eef3ff;
+  width: 100%;
+}
 #wenjuanEditHeader {
-  margin: -10px 0px 0px 0px;
-  height:50px;
-  background-color: #cc0000;
+  /*margin: -10px 0px 0px 0px;*/
+  /*height:50px;*/
+  /*border-bottom: solid #ccc;*/
+  /*background-color: #ffffff;*/
+  min-width: 880px;
+  width: 100%;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1999;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid #dee0e3;
+}
+.wenjuanEditHeaderLeft{
+  width: 80%;
+  display: flex;
+}
+.wenjuanEditHeaderCenter{
+  width: 40%;
+  display: flex;
+}
+.wenjuanEditHeaderLeft{
+  width: 20%;
+  display: flex;
 }
 #wenjuanPreview {
    border-style:solid;
@@ -226,46 +279,56 @@ li{
    height:30px;
    margin:-20px 0px 0px 1100px;
    text-align:center;
+   line-height: 30px;
  }
-#wenjuanSave{
-  border-style:solid;
-  border-width:1px;
-  width: 120px;
-  height:30px;
-  margin: -34px 0px 0px 1250px;
-  background-color: #a1afc9;
-  text-align:center;
-  line-height: 30px;
+.wenjuanSave{
+  display: flex;
+  width: 18%;
+  height: 10%;
+  border: 1px solid #0b97c4;
+  border-radius: 3px;
+  text-align: center;
+  background-color: #0b97c4;
+  color: #FFFFFF;
 }
-
-#wenjuanEditCenter {
-  height: 900px;
-  margin: 0 305px 0 205px;
-  background-color: #f2fafe;
+.wenjuanPublish{
+  display: flex;
+  width: 18%;
+  height: 10%;
+  border: 1px solid #d5d6d9;
+  border-radius: 4px;
+  text-align: center;
+  margin-left: 5%;
+  background-color: #ffffff;
+}
+.wenjuanEditCenter {
+  height: 100%;
+  margin: 0px 305px 400px 205px;
+  /*margin-left: 205px;*/
 }
 #wenjuanEditCenterLeft{
   width:204px;
   height: 100%;
   position:absolute;
-  background-color:#0000ff;
-  margin: 60px 0px 0px 0px;
+
+  margin: 80px 0px 0px 0px;
   left:0;
   top:0;
 }
 #wenjuanEditCenterMid {
-  width: 1009px;
-  height:100%;
-  margin:0px 0px 0px 0px;
-  background-color:#0BB20C;
+  height: 700px;
+  overflow-y: auto;
+  background-color: #f4f5f6;
+
 }
 #wenjuanEditCenterRight {
   width: 304px;
   height: 100%;
   position: absolute;
-  margin: 60px 0px 0px 1500px;
+  margin: 70px 0px 0px 1500px;
   right: 0;
   top: 0;
-  background-color: #00ffff;
+
 }
 .editControlTitle {
   height: 30px;
@@ -278,33 +341,81 @@ li{
   margin: 10px 0px 0px 20px;
 }
 #questionHeader{
-  width: 810px;
-  margin: -870px 0px 0px 100px;
+  border: 1px solid transparent;
+  /*margin: 10px 0px 0px 80px;*/
   background-color: #ffffff;
+  width: 100%;
+  /*margin-top: 50px;*/
+  max-width: 840px;
+  margin: 60px auto 0 auto;
 
 }
-#wenjuanTitleCenter{
-  width:  810px;
+
+.wenjuanTitleCenter{
+  width: 100%;
+  max-width: 810px;
   text-align: center;
 }
-#questionWel {
-  margin: 0px 0px 15px 0px;
-  width:  800px;
-  border-style:solid;
-  border-width:1px;
+.welcomeMessage{
+
+  /*margin: 0px 0px 0px 45px;*/
+  width: 100%;
+  max-width: 840px;
 }
-#questionList{
-   width: 810px;
-   margin: 15px 10px 10px 0px;
-  background-color: #0b97c4;
+.questionWel {
+  width: 100%;
+  max-width: 840px;
+  margin: 0px 0px 15px 0px;
+  border: 1px solid transparent;
+}
+.questionWel:hover {
+  border:1px dashed #0b97c4;
+}
+.questionList{
+  width: 100%;
+  max-width: 840px;
+   /*margin: 0px 10px 0px 80px;*/
+  background-color: #ffffff;
+  margin: 0 auto;
+}
+.questionListPhone{
+  width: 88%;
+  max-width: 840px;
+  /*margin: 0px 10px 0px 80px;*/
+  background-color: #ffffff;
+  margin: auto;
+  position: absolute;
+  top: 180px;
+  left: 0;
+  right: 0;
 }
 .userQuestionBox {
+  border: 1px solid transparent;
+  min-height: 220px;
+}
+.userQuestionBox:hover{
+  border:1px dashed #0b97c4;
+  box-sizing: border-box;
+}
+.userQuestionBoxActive {
   border-style:solid;
   border-width:1px;
-  margin: 20px 10px 10px 10px;
+  min-height: 220px;
+  position: relative;
 }
-.userQuestion {
-  margin: 0px 0px 0px 25px;
+.userQuestionBoxPhone {
+  border: 1px solid transparent;
+  min-height: 20%;
+}
+.userQuestionBoxPhone:hover{
+  border:1px dashed #0b97c4;
+  box-sizing: border-box;
+}
+.userQuestionBoxPhoneActive {
+  border-style:solid;
+  border-width:1px;
+  position: relative;
+  min-height: 10%;
 }
 .horizontalLine {
   height: 1px;
@@ -317,8 +428,10 @@ li{
   border-right: solid #ACC0D8 1px;
 }
 .editingWenjuanImg {
-  width: 810px;
+  width: 840px;
+  height: 200px;
 }
+
 input{
   outline-style: none ;
   border: 1px solid #ccc;
@@ -341,27 +454,44 @@ textarea{
   font-family: "Microsoft soft";
   margin: 8px 0px 0px 15px
 }
-.el-radio_label {
-    text-overflow: ellipsis;
-    white-space: normal;
-    line-height: 18px;
-    vertical-align: middle;
-    display: inline-block;
-}
+/*.el-radio_label {*/
+  /*  text-overflow: ellipsis;*/
+  /*  white-space: normal;*/
+  /*  line-height: 18px;*/
+  /*  vertical-align: middle;*/
+  /*  display: inline-block;*/
+/*}*/
 .optionClass{
   margin: 10px 0px 30px 20px;
-  display:block;
+
+  display:flex;
 }
 .videoOption{
   margin: -180px 0px 0px 0px;
+}
+.videoOptionPhone{
+
+}
+.video{
+  width: 300px;
+  height: 180px;
 }
 .optionClassEdit {
   border-style:solid;
   border-width:1px;
   height:30px;
-  width: 280px;
+  width: 220px;
   margin: 10px 0px 0px 20px;
-  display:block;
+  display:flex;
+
+}
+.picOptionClassEdit{
+  border-style:solid;
+  border-width:1px;
+  margin: 10px 0px 0px 20px;
+  height:151px;
+  width: 220px;
+  display:flex;
 }
 .optionEditInput {
   border: 1px solid #ccc;
@@ -369,6 +499,7 @@ textarea{
   height:23px;
   width: 150px;
   margin: 0px 0px 0px 0px;
+  border:none
 }
 .addOption{
   margin: 30px 0px 0px 20px;
@@ -378,9 +509,15 @@ textarea{
   text-align: center;
 }
 .imgAddOrDelete {
-  margin: 0px 0px 0px 10px;
+  /*margin: 0px 0px 0px 10px;*/
   width: 15px;
   height: 15px;
+}
+
+.imgAddOrDeletePic {
+  width: 15px;
+  height: 15px;
+  margin: 0px 0px 70px 0px;
 }
 .Rating-gray {
   margin-right: 1.066667vw;
@@ -392,6 +529,9 @@ textarea{
   height: 200px;
   margin: 0px 0px 0px 450px;
 }
+.videoPhone{
+  width: 100%;
+}
 .noVideoBox{
   width: 300px;
   height: 200px;
@@ -400,6 +540,7 @@ textarea{
   text-align: center;
   border: 1px solid #ccc;
   border-radius: 1px;
+  position: relative;
 }
 .uploadPicture {
   margin: -20px 0px 40px 20px;
@@ -407,18 +548,47 @@ textarea{
   border-radius: 1px;
   width: 150px;
   height: 150px;
+  text-align: center;
+  line-height: 150px;
+  position: relative;
 }
 .userImg {
   width: 150px;
   height: 150px;
 }
-.imgUploadInput{
-  margin: 50px 0px 20px 35px;
-  width: 70px;
+.imageCenter{
+  width: 150px;
+  height:150px;
   text-align: center;
+  line-height: 150px;
+}
+.videoUploadInput{
+  top:0;
+  left: 0;
+  margin: 0;
+  width: 300px;
+  height: 200px;
+  position:absolute;
+  opacity: 0;
+}
+.imgUploadInput{
+  top:0;
+  left: 0;
+  /*width: 70px;*/
+  /*text-align: center;*/
+  margin: 0;
+  width:150px;
+  height:150px;
+  position:absolute;
+  /*top:338px;*/
+  /*left:942px;*/
+  /*z-index: 1;*/
+  opacity: 0;
+
 }
 .imageUploadHasImg{
-  /*position: relative;*/
+  position: relative;
+  margin: 0px 0px 0px 5px;
 }
 .imgUploadInputHasImgInput  {
   height: 3rem;
@@ -428,9 +598,244 @@ textarea{
   z-index: 99999;
 }
 .uploadPictureHasImg{
-  margin: -20px 0px 20px -110px;
+  margin: -10px 0px 20px -110px;
   border: 1px solid #ccc;
   border-radius: 1px;
   width: 150px;
   height: 150px;
+  text-align: center;
+  line-height: 150px;
+}
+.radio{
+
+}
+/*预览问卷按钮*/
+.preview{
+  display: flex;
+  width: 18%;
+  height: 10%;
+  border: 1px solid #0b97c4;
+  border-radius: 4px;
+  text-align: center;
+  margin-right: 5%;
+}
+/*预览图标*/
+#imgPreview {
+  width: 20%;
+  height: 20%;
+  margin-top:5%;
+  margin-left: 15%;
+}
+.pictureHasImgPhone{
+  /*margin: -20px 0px 20px -110px;*/
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  width: 80%;
+  height: 80%;
+}
+
+.router-liink{
+  display:none;
+}
+#wenjuanPreviewHeader {
+  margin: 0px 0px 0px 0px;
+  height:50px;
+
+}
+.questionPreviewList{
+  width: 810px;
+  margin: 0px 10px 10px 20px;
+}
+.questionPreviewHeader{
+  margin: 0px 0px 0px 400px;
+}
+.wenjuanPreviewCenter {
+
+  margin: 10px 305px 0px 285px;
+  background-color: #f2fafe;
+  font-size: medium;
+}
+.previewWenjuanImg{
+  width: 810px;
+  height: 220px;
+  margin: 0px 0px 0px 40px;
+}
+.previewQuestionWel {
+  margin: 0px 0px 0px 50px;
+}
+
+.delete{
+  margin: -30px 0px 0px 780px;
+  width: 25px;
+  height: 30px;
+  position: absolute;
+  display: none;
+}
+.deleteActive {
+  margin: -30px 0px 0px 780px;
+  width: 25px;
+  height: 30px;
+  position: absolute;
+}
+
+.noQuestion{
+  height: 500px;
+  text-align: center;
+  line-height: 500px;
+}
+.noQuestion:hover{
+  border:1px dashed #0b97c4;
+}
+.noQuestionImg{
+  margin: 0px 0px 0px 0px;
+  width: 20px;
+  height: 20px;
+}
+.questionBottom{
+  /*margin-left: 80px;*/
+  width: 840px;
+  height: 80px;
+  border: none;
+  background-color: #ffffff;
+  position: relative;
+  overflow:hidden;
+  margin: 0 auto;
+}
+.submmit {
+  width:50px;
+  height:30px;
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  text-align: center;
+  line-height: 30px;
+  /*margin: 20px 0px 0px 420px;*/
+  background-color: #ffffff;
+  /*margin: 0 auto;*/
+
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.wenjuanHeader {
+  margin: -10px 0px 0px 0px;
+  height:50px;
+  border-bottom: solid #ccc;
+  display: flex;
+}
+.equipments{
+  border:1px solid #a1a1a1;
+  /*margin: 0 auto;*/
+  border-radius:10px;
+  height: 40px;
+  margin-left: 13%;
+}
+.equipment{
+  width: 40px;
+  height: 40px;
+  border-radius:10px;
+}
+.equipmentActive {
+  width: 40px;
+  height: 40px;
+  background-color: #f2fafe;
+
+  border-radius:10px;
+}
+.wenjuanPrewCenter {
+  height: 100%;
+  background-color: #eef3ff;
+}
+.wenjuanPrewCenterMid {
+  margin: 60px auto 0 auto;
+  left: 0;
+  right: 0;
+  width: 100%;
+  border-radius: 3px;
+}
+.wenjuanPrewCenterMidQuestion {
+  margin: auto;
+  position: absolute;
+  top: 112px;
+  left: 0;
+  right: 0;
+  width: 350px;
+  height: 550px;
+  overflow-y:auto;
+  padding: 120px 0px 0px 80px;
+}
+
+.wenjuanPrewCenterMidQuestion::-webkit-scrollbar {
+  display: none;
+}
+.phoneQuestionHeader{
+  /*border: 1px solid transparent;*/
+  /*margin: 10px 0px 0px 80px;*/
+  background-color: #ffffff;
+  width: 88%;
+  max-width: 840px;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  /*margin: 0 auto;*/
+}
+.preWenjuanImg{
+  width: 100%;
+}
+.wenjuanPhonePrewCenter {
+  height: 100%;
+  /*margin-left: 205px;*/
+  position: relative;
+  font-size: 10px;
+  background-color: #f4f5f6;
+}
+.wenjuanPrewCenterMidPhoneImg{
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+#publishCenter{
+  margin: 0 auto;
+  width: 70%;
+  height: 30%;
+  margin-top: 5%;
+  background-color: #ffffff;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.publishUrl{
+width: 400px;
+}
+.publishHeader{
+  margin-top:0%;
+  margin-left: 5%;
+  height: 30%;
+  width: 80%;
+  background-color: #ffffff;
+
+}
+#qrCode {
+/*margin: 0px 0px 0px 400px;*/
+  margin-left: 85%;
+  margin-top: 5%;
+  /*margin-top: ;*/
+  /*position: absolute;*/
+
+
+}
+.publishMessage {
+  margin-left: 5%;
+  margin-top: 0%;
+  position: absolute;
+
+}
+.publishButton{
+  display: flex;
+  margin-top:25%;
 }
