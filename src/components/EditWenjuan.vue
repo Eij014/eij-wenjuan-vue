@@ -286,7 +286,7 @@
             {
               "optionId": 0,
               "questionId": 0,
-              "optionName": '选项二',
+              "optionName": '选项三',
               "optionIndex": 0
             }
           ]
@@ -474,6 +474,7 @@
           data: {
             wenjuanId: this.wenjuanId,
             wenjuanTitle: this.wenjuanTitle,
+            imgUrl : this.imgUrl,
             welcomeMsg: this.welcomeMsg,
             questionVOList: this.questionVOList
           }

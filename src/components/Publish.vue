@@ -26,12 +26,13 @@
           <input style="left:-5%;position: absolute" type="text" class="publishUrl" disabled="disabled" size="80"
                  v-model="publishUrl">
           <div class='publishButton'>
-            <div
+            <div v-clipboard:success="onCopy"
+                 v-clipboard:copy="publishUrl"
               style="width: 20%;text-align:center;height: 30px;border:solid;
               border-radius: 1px; background-color: #0b97c4;color: #ffffff">
               复制
             </div>
-            <div
+            <div @click="answerWenjuan(wenjuanId)"
               style="width: 20%;margin-top:1%;text-align:center;margin-left:2%;height: 4%;border-color:#ccc;
               border: solid;border-radius: 1em;background-color: #ffffff;color: black">
               打开
@@ -46,6 +47,7 @@
 
 <script>
   import QRCode from 'qrcode2';
+
   export default {
     name: 'Publish',
     wenjuanId: 0,
@@ -55,7 +57,7 @@
       if (this.$router.currentRoute.query.wenjuanId != 0
         && this.$router.currentRoute.query.wenjuanId != undefined) {
         this.getWenjuan(this.$router.currentRoute.query.wenjuanId);
-        this.publishUrl = 'http://192.168.137.1:8081/wenjuan/' + this.$router.currentRoute.query.wenjuanId;
+        this.publishUrl = 'http://192.168.137.1:8081/#/wenjuan/' + this.$router.currentRoute.query.wenjuanId;
       } else {
         this.getImgUrl();
       }
@@ -79,7 +81,7 @@
     methods: {
       bindQRCode: function () {
         new QRCode(this.$refs.qrCodeDiv, {
-          text: 'http://localhost:8080/' + this.$router.currentRoute.query.wenjuanId,
+          text: 'http://192.168.137.1:8081/#/' + this.$router.currentRoute.query.wenjuanId,
           width: 128,
           height: 128,
           colorDark: '#000',
@@ -89,6 +91,12 @@
       },
       closeHandle () {
         document.getElementById('qrCode').innerHTML = ""
+      },
+      onCopy(e){
+        this.$message({
+          message:'复制成功！',
+          type:'success'
+        })
       },
       getWenjuan(wenjuanId) {
         this.axios({
@@ -122,6 +130,9 @@
       },
       goHome() {
         this.$router.push({path: '/Home'})
+      },
+      answerWenjuan(wenjuanId) {
+        this.$router.push({path: '/wenjuan/' + wenjuanId});
       }
     },
     computed: {}

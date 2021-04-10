@@ -100,7 +100,7 @@
         </div>
       </div>
     </div>
-    <div v-else>
+    <div style="height: 100%" v-else>
       <div class="wenjuanPhonePrewCenter">
         <div class="wenjuanPrewCenterMid">
           <img class="wenjuanPrewCenterMidPhoneImg" src="../assets/icon/phoneVO.svg">
@@ -176,7 +176,7 @@
 <script>
 
   export default {
-    name: 'EditWenjuan',
+    name: 'PreviewWenjuan',
     wenjuanId: 0,
     data () {
       if (this.$router.currentRoute.query.wenjuanId != 0

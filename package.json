@@ -24,6 +24,7 @@
     "videojs-contrib-hls": "^5.15.0",
     "vue": "^2.6.12",
     "vue-axios": "^3.2.4",
+    "vue-clipboard2": "^0.3.1",
     "vue-cookie": "^1.1.4",
     "vue-cookies": "^1.7.4",
     "vue-resource": "^1.5.2",

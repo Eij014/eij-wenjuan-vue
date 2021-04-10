@@ -20,6 +20,7 @@ import Video from 'video.js'
 import dropDown from './dropDown/dropDown'
 import dropDownMenu from './dropDown/dropDownMenu'
 import dropDownItem from './dropDown/dropDownItem'
+import VueClipboard  from 'vue-clipboard2';
 
 axios.defaults.baseURL = 'http://localhost:8081'
 // axios请求携带cookie
@@ -36,7 +37,7 @@ Vue.use(Router)
 Vue.use(vSelect)
 Vue.use(VideoPlayer)
 Vue.component(Button.name, Button)
-
+Vue.use( VueClipboard );
 new Vue({
   el: '#app',
   router,

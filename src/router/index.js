@@ -4,6 +4,7 @@ import EditWenjuan from '@/components/EditWenjuan'
 import PreviewWenjuan from '@/components/Preview'
 import Home from '@/components/Home'
 import Publish from '@/components/Publish'
+import Answer from '@/components/Answer'
 import App from '@/App'
 Vue.use(Router)
 
@@ -42,6 +43,11 @@ export default new Router({
       path:'/publish',
       name:'Publish',
       component:Publish
+    },
+    {
+      path:'/wenjuan/:wenjuanId',
+      name:'Answer',
+      'component':Answer
     }
   ]
 })
