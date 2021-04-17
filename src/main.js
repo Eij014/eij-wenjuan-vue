@@ -22,6 +22,8 @@ import dropDownMenu from './dropDown/dropDownMenu'
 import dropDownItem from './dropDown/dropDownItem'
 import VueClipboard  from 'vue-clipboard2';
 
+
+//Vue.prototype.$echarts = echarts
 axios.defaults.baseURL = 'http://localhost:8081'
 // axios请求携带cookie
 axios.defaults.withCredentials = true

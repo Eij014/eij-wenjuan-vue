@@ -8,7 +8,6 @@
     </div>
 
   </div>
-
 </template>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.12/vue.js"></script>

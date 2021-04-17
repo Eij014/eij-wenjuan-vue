@@ -1,22 +1,4 @@
-/*html,*/
-/*body,*/
-/*#app {*/
-  /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
-  /*-webkit-font-smoothing: antialiased;*/
-  /*-moz-osx-font-smoothing: grayscale;*/
-  /*text-align: center;*/
-  /*color: #2c3e50;*/
-  /*margin-top: 60px;*/
-/*}*/
-/*#header{*/
-  /*background-color: #00d6b2;*/
-  /*width: 100%;*/
-  /*height: 0px;*/
-  /*border: 1px #00d6b2 solid;*/
-  /*border-radius:5px;*/
-  /*margin: 0px 0px 0px 0px;*/
-  /*box-shadow: 5px 5px 5px 5px gray;*/
-/*}*/
+
 #systemHeader {
   margin: 10px 0px 0px 0px;
   height: 40px;
@@ -841,4 +823,143 @@ width: 400px;
 .publishButton{
   display: flex;
   margin-top:25%;
+}
+.resultAnalysisCenter{
+  right: 0;
+  left: 0;
+  margin-top: -1%;
+  height: 100vh;
+  background-color: #eef3ff;
+}
+.resultAnalysis {
+  width: 100%;
+  height: 98vh;
+  overflow:hidden;
+}
+.resultAnalysisCenterLeft {
+  margin-top :60px;
+  width: 6%;
+  /*background-color: #0b97c4;*/
+  left: 0;
+  right: 0;
+  height: 100%;
+  border: 1px solid #000000;
+  border-radius: 2px;
+}
+.leftMenuBox {
+  width: 100%;
+  height: 100%;
+  /*margin-top: 30%;*/
+  /*border: 1px solid #cc0000;*/
+  border-radius: 2px;
+  left: 0;
+  background-color: #ffffff;
+}
+.menu {
+  /*color: #cc0000;*/
+  /*margin-bottom: 10%;*/
+  /*border: 1px solid #000000;*/
+  height: 10%;
+  /*border-radius: 2px;*/
+  background-color: #ffffff;
+  margin-bottom: 5%;
+
+}
+.menuNoPick {
+  height: 100%;
+  background-color: #ffffff;
+  margin-bottom: 5%;
+}
+.menuPick {
+  /*margin-left: 30%;*/
+  height: 100%;
+  background-color: #66b1ff;
+  margin-bottom: 5%;
+}
+.resultAnalysisHeader {
+  min-width: 880px;
+  width: 100%;
+  height: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1999;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid #dee0e3;
+}
+.recycle {
+  display: flex;
+  width: 100vh;
+  /*width: 800px;*/
+  /*height: 800px;*/
+}
+#echartsTest {
+  /*width:500px;*/
+  /*height:500px;*/
+  width: 500px;
+  height: 500px;
+  /*heght:50%;*/
+  /*margin-left: 6%;*/
+  /*background-color:#ccc000*/
+}
+.resultAnalysisCenterRight {
+  height: 100%;
+  /*margin-top :60px;*/
+  /*background-color: #0b97c4;*/
+  margin-left:6%;
+  margin-top: -48%;
+  /*border: 1px solid #000000;*/
+  border-radius: 2px;
+  overflow: auto;
+  background-color: #eef3ff;
+}
+#chinaMap{
+  width: 500px;
+  height: 500px;
+  margin-left: 100px;
+  /*margin-left: 86%;*/
+}
+.recycleForm {
+
+}
+.questionForm {
+ margin-left: 20%;
+  margin-right:20%;
+  margin-bottom: 1%;
+  border:1px solid #c0c4cc;
+ border-redius:2px;
+
+}
+.formTypeList {
+  display: flex;
+  width: 20%;
+  margin-left: 20%;
+  margin-bottom: 1%;
+}
+.testVue {
+  width: 1000px;
+  height: 1000px;
+}
+.testVueList {
+  width: 1000px;
+  height: 1000px;
+}
+
+.formType {
+  width:60px;
+  border: 1px solid #cc0000;
+  margin-right:5px;
+  text-align: center;
+  background-color: #ffffff;
+}
+.formTypeCheck{
+  width:60px;
+  border: 1px solid #cc0000;
+  margin-right:5px;
+  text-align: center;
+  background-color: #66b1ff;
 }

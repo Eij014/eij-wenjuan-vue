@@ -5,6 +5,10 @@ import PreviewWenjuan from '@/components/Preview'
 import Home from '@/components/Home'
 import Publish from '@/components/Publish'
 import Answer from '@/components/Answer'
+import ResultAnalysis from '@/components/ResultAnalysis'
+import RecycleProcess from '@/components/RecycleProcess'
+import RecycleForm from '@/components/RecycleForm'
+import testVue from '@/components/test'
 import App from '@/App'
 Vue.use(Router)
 
@@ -47,7 +51,28 @@ export default new Router({
     {
       path:'/wenjuan/:wenjuanId',
       name:'Answer',
-      'component':Answer
+      component:Answer
+    },
+    {
+      path:'/resultAnalysis',
+      name:'ResultAnalysis',
+      component:ResultAnalysis
+    },
+    {
+      path:'/resultAnalysis/recycleProcess',
+      name:'RecycleProcess',
+      component:RecycleProcess
+    },
+    {
+      path:'/resultAnalysis/recycleForm',
+      name:'RecycleForm',
+      component:RecycleForm
+    },
+    {
+      path:'/resultAnalysis/testVue',
+      name:'testVue',
+      component:testVue
     }
+
   ]
 })

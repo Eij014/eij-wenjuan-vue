@@ -37,10 +37,10 @@
             <img class="imgCenter" src="../assets/icon/check.png"/>
             <div style="font-size: medium">多选框</div>
           </div>
-          <div @click="addScore()" class="question3" draggable="true">
-            <img class="imgCenter" src="../assets/icon/score.png"/>
-            <div style="font-size: medium">评分题</div>
-          </div>
+          <!--<div @click="addScore()" class="question3" draggable="true">-->
+            <!--<img class="imgCenter" src="../assets/icon/score.png"/>-->
+            <!--<div style="font-size: medium">评分题</div>-->
+          <!--</div>-->
           <div @click="addVideo()" class="question1" draggable="true">
             <img class="imgCenter" src="../assets/icon/video.png"/>
             <div style="font-size: medium">视频题</div>
@@ -49,10 +49,10 @@
             <img class="imgCenter" src="../assets/icon/picture.png"/>
             <div style="font-size: medium">图片题</div>
           </div>
-          <div class="question3">
-            <img class="imgCenter" src="../assets/icon/check.png"/>
-            <div style="font-size: medium"></div>
-          </div>
+          <!--<div class="question3">-->
+            <!--<img class="imgCenter" src="../assets/icon/check.png"/>-->
+            <!--<div style="font-size: medium"></div>-->
+          <!--</div>-->
         </div>
       </div>
       <div id="wenjuanEditCenterMid">
@@ -245,8 +245,7 @@
         this.welcomeMsg = res.data.data.welcomeMsg;
         this.questionVOList = res.data.data.questionVOList;
         this.imgUrl = res.data.data.imgUrl;
-      })
-        ;
+      });
       },
       getImgUrl() {
         console.log(this.$cookies.get("userToken"));
