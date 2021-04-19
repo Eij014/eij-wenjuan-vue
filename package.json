@@ -28,6 +28,7 @@
     "vue-clipboard2": "^0.3.1",
     "vue-cookie": "^1.1.4",
     "vue-cookies": "^1.7.4",
+    "vue-layer": "^1.2.5",
     "vue-resource": "^1.5.2",
     "vue-router": "^3.5.1",
     "vue-video-player": "^5.0.2",

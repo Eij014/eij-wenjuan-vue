@@ -49,7 +49,7 @@ export default new Router({
       component:Publish
     },
     {
-      path:'/wenjuan/:wenjuanId',
+        path:'/wenjuan/:wenjuanId',
       name:'Answer',
       component:Answer
     },

@@ -10,14 +10,15 @@
   export default {
 
     name: 'Recycle',
-    wenjuanId: 0,
     equipment: 0,
+    props:{
+      wenjuanId:0
+    },
     data() {
       require('echarts');
       require("echarts/lib/component/legend");
       require('echarts/incubator-echarts/test/data/map/js/china')
       return {
-        wenjuanId: 2707352,
         chinaMap: undefined
       }
     },
@@ -32,7 +33,7 @@
           method: 'GET',
           url: '/wenjuan/analysis/get/recycle/process',
           params: {
-            wenjuanId: 2707352
+            wenjuanId: this.wenjuanId
           }
         }).then((res) => {
           mapData = res.data.data.chinaMapData;

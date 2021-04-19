@@ -7,6 +7,8 @@ import VueCookies from 'vue-cookies'
 import ElementUI from 'element-ui'
 import vSelect from 'vselect-component'
 import VideoPlayer from 'vue-video-player'
+import 'vue-layer/lib/vue-layer.css'
+import layer from "vue-layer";
 import plugin from './js/plugin.js'
 import { Button} from 'element-ui'
 import Router from 'vue-router'
@@ -31,6 +33,9 @@ global.axios = axios
 Vue.prototype.axios = axios
 Vue.config.productionTip = false
 Vue.prototype.$video = Video
+Vue.prototype.$layer = layer(Vue, {
+  msgtime: 3 //目前只有一项，即msg方法的默认消失时间，单位：秒
+});
 Vue.use(VueResource)
 Vue.use(VueCookies)
 Vue.use(plugin)

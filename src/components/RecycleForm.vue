@@ -21,6 +21,9 @@
   import * as echarts from 'echarts'
   export default {
     name: 'RecycleForm',
+    props:{
+      wenjuanId:0
+    },
     data() {
       require('echarts');
       require("echarts/lib/component/legend");
@@ -49,7 +52,7 @@
           method:'GET',
           url:'/wenjuan/analysis/get/recycle/form',
           params:{
-            wenjuanId:2707352
+            wenjuanId:this.wenjuanId
           }
         }).then((res) => {
             this.recycleFormList = res.data.data.result;

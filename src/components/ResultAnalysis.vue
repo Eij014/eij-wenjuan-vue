@@ -24,7 +24,7 @@
             </div>
         </div>
       <div class="resultAnalysisCenterRight">
-        <div :is="currentPage"></div>
+        <div :is="currentPage" :wenjuanId="wenjuanId"></div>
       </div>
 
     </div>
@@ -36,9 +36,6 @@
   import * as echarts from 'echarts'
   export default {
     name: 'ResultAnalysis',
-    wenjuanId: 0,
-    equipment: 0,
-
     component:{
       RecycleProcess,
       RecycleForm
@@ -46,6 +43,7 @@
 
     data () {
       return {
+        wenjuanId: 0,
         currentPage:RecycleProcess,
         currentPageEn:'RecycleProcess',
         resultAnalysisCenterLeftMenu: [
@@ -66,14 +64,21 @@
       }
     },
     methods: {
+      init() {
+        if (this.$router.currentRoute.query.wenjuanId != 0
+          && this.$router.currentRoute.query.wenjuanId != undefined) {
+          this.wenjuanId = this.$router.currentRoute.query.wenjuanId
+          console.log(this.wenjuanId);
+          console.log('test');
+        }
+      },
       changeMenu(componentName, componentEn) {
-        console.log("componentEn=")
-        console.log(componentEn);
-        console.log(this.currentPage);
         this.currentPageEn = componentName;
         this.currentPage = componentEn;
-        console.log(this.currentPage);
       }
+    },
+    created(){
+      this.init();
     }
   }
 </script>

@@ -1,6 +1,6 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
   <div id="home">
-    <div id="systemHeader">
+    <div class="homeHeader">
       <img id="img" src="../assets/icon/wenjuan-title.png"/>
       <div id="title">Eij问卷</div>
       <div v-if=userStatus() class="userLogin" style="font-size: small" v-on:click="userSettingStatus = true">
@@ -53,33 +53,92 @@
           <el-button type="primary" @click="submitForm('register')">注 册</el-button>
         </div>
       </el-dialog>
-
-
+      <PopUps :popUpsShow="popUpsShow" :popUpsTitle="popUpsTitle" @hideModal="hideModal" @submit="submit">
+        <p>确定要删除问卷吗</p>
+      </PopUps>
     </div>
     <div class=systemCenter>
       <div id="myWenjuan">我的问卷</div>
 
       <div id="wenjuanBox">
-        <div id="createWenjuanBox" @click="createWenjuan()">
+        <div id="createWenjuanBox" @click="createWenjuan()"
+             v-on:mouseover="mouseleaveWenjuan2()">
           <img id="imageCenter" src="../assets/icon/createWenjuan.png"/>
-          <div id="buttonCreateWenjuan" v-on:click="createWenjuan(0)">
+          <div  class="createWenjuanButton" v-on:click="createWenjuan(0)">
             新建问卷
           </div>
         </div>
         <div id="wenjuanList">
-          <li v-for="(wenjuan,index) in wenjuanList" id="userWenjuanBox" :key="index">
-            <div v-on:click="createWenjuan(wenjuan.wenjuanId)">
+          <li v-for="(wenjuan,index) in wenjuanList" class="userWenjuanBox" :key="index">
+            <div v-on:click="createWenjuan(wenjuan.wenjuanId)"
+                 v-on:mouseover="mouseoverWenjuan(wenjuan.wenjuanId)"
+                 v-on:mouseleave="mouseleaveWenjuan()">
               <img id="wenjuanImg" :src="wenjuan.imgUrl"/>
-              <a>{{ wenjuan.wenjuanTitle }}</a>
-              <div>回收: {{wenjuan.recyclingNum}}</div>
-              <div v-if="wenjuan.status == 0" style="color:#FFB15B">未发布</div>
-              <div v-if="wenjuan.status == 1" style="color:#47E400">已发布</div>
-              <a>{{getDate(wenjuan.createTime)}}</a>
+              <div class="userWenjuanBoxWenjuanTitle">{{ wenjuan.wenjuanTitle }}</div>
+              <div :class="mouseHoverWenjuanId!=wenjuan.wenjuanId ?'userWenjuanShadow' :'userWenjuanShadowHover'">
+                回收: {{wenjuan.recyclingNum}}</div>
+              <div class="userWenjuanBoxWenjuanOperate">
+                <!--<div class="userWenjuanShadowBr" v-if="mouseHoverWenjuanId!=wenjuan.wenjuanId">-->
+                       </br>
+                       </br>
+                <!--</div>-->
+                <div :class="mouseHoverWenjuanId!=wenjuan.wenjuanId ? 'userWenjuanBoxWenjuanOperateHold' :'userWenjuanBoxWenjuanOperateMove'">
+                  <div :class="mouseHoverWenjuanId!=wenjuan.wenjuanId ? 'userWenjuanBoxWenjuanStatus' :'userWenjuanBoxWenjuanStatusHover'">
+                    <div v-if="wenjuan.status == 0" class="wenjuanStatus">
+                      <!--圆圈-->
+                      <div class="circle" style="background: #FFB15B"></div>
+                      <div style="margin-left:5%;color:#FFB15B">未发布</div>
+                    </div>
+                    <div v-if="wenjuan.status == 1" class="wenjuanStatus">
+                      <div class="circle" style="background:#47E400"></div>
+                      <div style="margin-left:5%;color:#47E400">已发布</div>
+                    </div>
+                    <div class="wenjuanDate">{{getDate(wenjuan.createTime)}}</div>
+                  </div>
+                  </br>
+                  <div :class="mouseHoverWenjuanId==wenjuan.wenjuanId ? 'userWenjuanBoxWenjuanEdit' :'userWenjuanBoxWenjuanEditMove'" v-if="mouseHoverWenjuanId==wenjuan.wenjuanId">
+                    <div style="width: 30%">
+                        <img class="mouseHoverOnWenjuanImg" src="../assets/icon/edit.png">
+                        编辑
+                    </div>
+                    <div style="width: 30%" @click.stop="resultAnalysis(wenjuan.wenjuanId,wenjuan.status)">
+                      <img class="mouseHoverOnWenjuanImg" src="../assets/icon/resultAnalysis.png">
+                      结果分析
+                    </div>
+                    <el-dropdown class="wenjuanOtherOperate">
+                      <div class="wenjuanOtherOperate" v-on:mouseover="mouseoverWenjuan(wenjuan.wenjuanId)">
+                        <img class="wenjuanOtherOperateImg" src="../assets/icon/other.png">
+                      </div>
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item @click.native="deleteWenjuan(wenjuan.wenjuanId)">删除</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                  </div>
+                  <div class = "userWenjuanBoxWenjuanEditMove" v-else>
+                    <div style="width: 30%">
+                      <img class="mouseHoverOnWenjuanImg" src="../assets/icon/edit.png">
+                      编辑
+                    </div>
+                    <div style="width: 30%">
+                      <img class="mouseHoverOnWenjuanImg" src="../assets/icon/resultAnalysis.png">
+                      结果分析
+                    </div>
+                    <el-dropdown>
+                      <div class="wenjuanOtherOperate">
+                        <img class="wenjuanOtherOperateImg" src="../assets/icon/other.png">
+                      </div>
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item @click.native="deleteWenjuan(wenjuan.wenjuanId)">删除</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                  </div>
+                </div>
+              </div>
             </div>
           </li>
         </div>
       </div>
-      <div v-if="total > 8" class="page-bar">
+      <div v-if="total > 6" class="page-bar">
         <ul>
           <li v-if="currentPage>1">
             <a style="font-size: medium" v-on:click="currentPage--,pageClick()">上一页</a>
@@ -94,7 +153,6 @@
           <li><a style="font-size: medium">共<i>{{ total }}</i>个</a></li>
         </ul>
       </div>
-      <div id="bottom"/>
     </div>
   </div>
 
@@ -108,11 +166,13 @@
   Vue.use(VueRouter);
   import axios from 'axios';
   Vue.prototype.axios = axios
+  import PopUps from './PopUps.vue'
   export default {
     name: 'Home',
     data () {
-      this.$cookies.set('testCookie', '1234', 1)
       if (this.userStatus()) {
+        console.log(this.$cookies.get('userToken'))
+
         this.wenjuanListFn(1);
       }
 
@@ -144,11 +204,14 @@
       };
 
       return {
-
+        timer: null,
+        hoverEnterTime: 200,
+        hoverLeaveTime: 10,
         isShow: true,
+        wenjuanIdDelete:0,
         loginBoxShowStatus: false,
         loginFormVisible: false,
-        username: 'zhuhaojie',
+        username: '',
         userheader: '../assets/icon/header.png',
         totalPage: 0,
         total: 0,
@@ -159,6 +222,8 @@
         loginDialog: false, //登录弹窗
         userSettingStatus: false,//用户设置
         loginPower: false,
+        mouseHoverOnWenjuan:false, //鼠标hover在问卷上
+        mouseHoverWenjuanId:0, //鼠标hover的问卷Id
         /*插入form方法*/
         /*设定规则指向*/
         loginForm: {
@@ -180,7 +245,8 @@
             {validator: checkNum, trigger: 'blur'}
           ]
         },
-
+        popUpsTitle:'删除', //弹窗标题
+        popUpsShow:false, //弹窗展示
         /*插入form方法*/
 
         dialogTableVisible: true,
@@ -194,16 +260,17 @@
         formLabelWidth: '120px'
       };
     },
+    components:{
+      PopUps
+    },
     methods: {
       wenjuanListFn(index) {
-        console.log(this.$cookies.get('userToken'));
-        console.log('cookie');
         this.axios({
             method:'POST',
             url:'/wenjuan/list',
             data: {
               currentPage: index,
-              pageSize: 8
+              pageSize: 6
             },
             header:{
               'Content-Type':'application/json'
@@ -215,6 +282,7 @@
           this.pageSize = res.data.data.pageSize;
           this.currentPage = res.data.data.currentPage;
           this.totalPage = res.data.data.totalPage;
+          this.username = this.$cookies.get('userToken').split('-')[1];
         });
       },
       btnClick: function (data) {
@@ -248,19 +316,97 @@
         this.total = 0;
       },
       getDate(timestamp) {
-        var date = new Date(timestamp * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        var date = new Date(timestamp * 1000);
         var Y = date.getFullYear() + '-';
-        var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-        var D = date.getDate() + ' ';
-        var h = date.getHours() + ':';
-        var m = date.getMinutes() + ':';
-        var s = date.getSeconds();
+        var M = this.dateAddZero(date.getMonth() + 1) + '-';
+//        var D = (date.getDay() + 1 < 10 ? '0' + (date.getDay() + 1) : date.getDay() + 1) + ' ';
+//        var D = (date.getDay() + 1) + ' ';
+        var D = this.dateAddZero(date.getDate()) + ' ';
+        var h = this.dateAddZero(date.getHours()) + ':';
+        var m = this.dateAddZero(date.getMinutes()) + ':';
+        var s = this.dateAddZero(date.getSeconds());
         return Y + M + D + h + m + s;
+      },
+      dateAddZero(value) {
+        return value  < 10 ? ('0' + (value)) : value
       },
       userStatus() {
         return this.$cookies.isKey("userToken");
       },
+      mouseoverWenjuan(wenjuanId) {
+        clearTimeout(this.timer)
+        this.timer = setTimeout(() =>{
+          this.mouseHoverOnWenjuan = true;
+          this.mouseHoverWenjuanId=wenjuanId;
+        },this.hoverEnterTime);
+      },
+      mouseleaveWenjuan() {
+        $(document).mouseover(function(e){
+        });
+        clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
+          this.mouseHoverOnWenjuan = false;
+          this.mouseHoverWenjuanId=0
+        }, this.hoverLeaveTime)
+      },
+      mouseleaveWenjuan2() {
+        clearTimeout(this.timer)
+        this.timer = setTimeout(() => {
+          this.mouseHoverOnWenjuan = false;
+          this.mouseHoverWenjuanId=0
+        }, this.hoverLeaveTime)
+      },
+      deleteWenjuan(wenjuanId){
+        this.popUpsShow = true;
+        this.popUpsTitle = '删除'
+        console.log('delete')
+        this.wenjuanIdDelete = wenjuanId;
+        console.log('deleteSuccess');
 
+      },
+      resultAnalysis(wenjuanId,wenjuanStatus) {
+        if (wenjuanStatus != 1) {
+          this.$message({
+            type: 'failed',
+            message: '问卷尚未发布'
+          });
+        } else {
+          this.$router.push({path: '/resultAnalysis', query: {wenjuanId: wenjuanId}})
+        }
+      },
+      hideModal() {
+        // 取消弹窗回调
+        this.popUpsShow = false
+        this.wenjuanIdDelete = 0;
+      },
+
+      submit() {
+        // 确认弹窗回调
+        this.axios({
+          method: 'GET',
+          url: '/wenjuan/delete',
+          params: {
+            wenjuanId: this.wenjuanIdDelete
+          }
+        }).then((res) => {
+          if(res.data.code==0) {
+            this.$message({
+              type: 'success',
+              message: '删除成功'
+            });
+            this.popUpsShow = false
+            this.wenjuanListFn(1);
+          } else {
+            this.$message({
+              type: 'failed',
+              message: '删除失败,请重试'
+            });
+            this.popUpsShow = false
+          }
+        });
+
+
+      },
       login() {
         this.loginFormVisible = true;
         var dom = document.createElement('div');
@@ -361,6 +507,8 @@
           if (res.data.code == 0) {
             this.$cookies.set('userToken', res.data.data, 6000000);
             this.username = this.$cookies.get('userToken').split('-')[1];
+            console.log("test")
+            console.log(this.username);
             this.wenjuanListFn(1);
             this.dialogFormVisible = false;
           } else {
