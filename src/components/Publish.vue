@@ -57,7 +57,7 @@
       if (this.$router.currentRoute.query.wenjuanId != 0
         && this.$router.currentRoute.query.wenjuanId != undefined) {
         this.getWenjuan(this.$router.currentRoute.query.wenjuanId);
-        this.publishUrl = 'http://192.168.137.1:8081/#/wenjuan/' + this.$router.currentRoute.query.wenjuanId;
+        this.publishUrl = 'http://192.168.43.178:8081/#/wenjuan/' + this.$router.currentRoute.query.wenjuanId;
       } else {
         this.getImgUrl();
       }
