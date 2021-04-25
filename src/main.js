@@ -18,6 +18,9 @@ import './assets/css/global.css'
 import "babel-polyfill"
 import 'video.js/dist/video-js.css'
 import Video from 'video.js'
+import 'xe-utils'
+import VXETable from 'vxe-table'
+import 'vxe-table/lib/style.css'
 
 import dropDown from './dropDown/dropDown'
 import dropDownMenu from './dropDown/dropDownMenu'
@@ -45,6 +48,7 @@ Vue.use(vSelect)
 Vue.use(VideoPlayer)
 Vue.component(Button.name, Button)
 Vue.use( VueClipboard );
+Vue.use(VXETable)
 new Vue({
   el: '#app',
   router,

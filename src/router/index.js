@@ -8,6 +8,7 @@ import Answer from '@/components/Answer'
 import ResultAnalysis from '@/components/ResultAnalysis'
 import RecycleProcess from '@/components/RecycleProcess'
 import RecycleForm from '@/components/RecycleForm'
+import RecycleCross from '@/components/RecycleCross'
 import testVue from '@/components/test'
 import App from '@/App'
 Vue.use(Router)
@@ -72,6 +73,11 @@ export default new Router({
       path:'/resultAnalysis/testVue',
       name:'testVue',
       component:testVue
+    },
+    {
+      path:'/resultAnalysis/cross',
+      name:'cross',
+      component:RecycleCross
     }
 
   ]

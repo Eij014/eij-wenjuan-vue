@@ -347,7 +347,8 @@
           url: '/wenjuan/detail',
           withCredentials: true,
           params: {
-            wenjuanId: wenjuanId
+            wenjuanId: wenjuanId,
+            type:'edit'
           }
         }).then((res) => {
         this.wenjuanId = res.data.data.wenjuanId;

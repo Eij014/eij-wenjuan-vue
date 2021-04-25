@@ -6,7 +6,6 @@
           <div :id = "form.questionId" style="width:700px;height:500px"></div>
           <!--类型选择-->
           <div  class="formTypeList" @click="changeFormType(type.nameEn,index)">
-
             <div v-for="(type,typeIndex) in echartsTypeList" :key="typeIndex">
               <div :class="form.formType == type.nameEn ? 'formTypeCheck' : 'formType'"
                   @click="changeFormType(type.nameEn,index)">
@@ -65,7 +64,23 @@
                 for (let index = 0; index < this.recycleFormList.length; index++) {
                     let data = this.recycleFormList[index];
                     let ehcartsForm = echarts.init(document.getElementById(data.questionId));
-                    data.yAxis =  {minInterval:1};
+                    data.yAxis =  {
+                      minInterval:1,
+                      type: 'value',
+                      splitLine: {
+                        show: false,
+                      }
+                    };
+                    data.xAxis.type='category';
+                    data.xAxis.splitLine={
+                      show: true,
+                      lineStyle: {
+                        type: 'dashed',
+                      },
+                    }
+                    data.color=[
+                      '#70f3ff','#56004f'
+                    ]
                     ehcartsForm.setOption(data);
                 }
             });

@@ -104,7 +104,8 @@
           url: '/wenjuan/detail',
           withCredentials: true,
           params: {
-            wenjuanId: wenjuanId
+            wenjuanId: wenjuanId,
+            type:'publish'
           }
         }).then((res) => {
           console.log(res);

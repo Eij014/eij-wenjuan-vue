@@ -25,6 +25,7 @@
         </div>
       <div class="resultAnalysisCenterRight">
         <div :is="currentPage" :wenjuanId="wenjuanId"></div>
+        <div style="height: 100px"></div>
       </div>
 
     </div>
@@ -33,12 +34,14 @@
 <script>
   import RecycleProcess from '@/components/RecycleProcess'
   import RecycleForm from '@/components/RecycleForm'
+  import RecycleCross from '@/components/RecycleCross'
   import * as echarts from 'echarts'
   export default {
     name: 'ResultAnalysis',
     component:{
       RecycleProcess,
-      RecycleForm
+      RecycleForm,
+      RecycleCross
     },
 
     data () {
@@ -58,6 +61,12 @@
             menuName: '统计报表',
             componentName:'RecycleForm',
             componentEn:RecycleForm
+          },
+          {
+            icon: require('../assets/icon/cross.png'),
+            menuName: '交叉分析',
+            componentName:'RecycleCross',
+            componentEn:RecycleCross
           }
         ],
 

@@ -948,6 +948,7 @@ textarea{
   overflow:hidden;
   margin: 0 auto;
 }
+
 .submmit {
   width:50px;
   height:30px;
@@ -966,6 +967,28 @@ textarea{
   left: 0;
   right: 0;
 }
+.submmit:hover{
+  width:50px;
+  height:30px;
+  border: 1px solid #ccc;
+  border-radius: 1px;
+  text-align: center;
+  line-height: 30px;
+  /*margin: 20px 0px 0px 420px;*/
+  background-color: #ffffff;
+  /*margin: 0 auto;*/
+
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #66b1ff;
+  color: #303133;
+  cursor: pointer;
+}
+
 .wenjuanHeader {
   margin: -10px 0px 0px 0px;
   height:50px;
@@ -1157,19 +1180,17 @@ width: 400px;
   border-bottom: 1px solid #dee0e3;
 }
 .recycle {
-  display: flex;
-  width: 100vh;
+  /*display: flex;*/
+
   /*width: 800px;*/
   /*height: 800px;*/
 }
-#echartsTest {
-  /*width:500px;*/
-  /*height:500px;*/
-  width: 500px;
+#recycleSchedule {
+  margin-top: 2%;
+  margin-left: 2%;
+  width: 680px;
   height: 500px;
-  /*heght:50%;*/
-  /*margin-left: 6%;*/
-  /*background-color:#ccc000*/
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .resultAnalysisCenterRight {
   height: 100%;
@@ -1185,7 +1206,11 @@ width: 400px;
 #chinaMap{
   width: 500px;
   height: 500px;
-  margin-left: 100px;
+  /*margin-left: 100px;*/
+  margin-left: 5%;
+  margin-top: 2%;
+  margin-right: 2%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   /*margin-left: 86%;*/
 }
 .recycleForm {
@@ -1216,19 +1241,104 @@ width: 400px;
 
 .formType {
   width:60px;
-  border: 1px solid #cc0000;
+  border: 1px solid #cccccc;
   margin-right:5px;
   text-align: center;
   background-color: #ffffff;
 }
 .formTypeCheck{
   width:60px;
-  border: 1px solid #cc0000;
+  border: 1px solid #cccccc;
   margin-right:5px;
   text-align: center;
   background-color: #66b1ff;
+  color: #ffffff;
 }
-.test{
-  transition: all 50s ease;
-  opacity:0.9;
+/*.test{*/
+  /*transition: all 50s ease;*/
+  /*opacity:0.9;*/
+/*}*/
+.recycleCount{
+  width: 300px;
+  height: 220px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #1f2329;
+  /*margin-left: 100px;*/
+  margin-left: 13%;
+  margin-top: 10%;
+  margin-right: 2%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.recycleRatio{
+  width: 300px;
+  height: 275px;
+  /*margin-left: 100px;*/
+  margin-left: 13%;
+  margin-top: 2%;
+  margin-right: 2%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.ratioTypeBox{
+  /*display: flex;*/
+  /*width: 20%;*/
+  /*margin-left: 20%;*/
+  /*margin-bottom: 1%;*/
+
+}
+
+#recycleCountForm {
+  width: 300px;
+  height: 300px;
+  margin-top: -20%;
+}
+.ratioTypeCheck{
+  background-color: #66b1ff;
+  border: 1px solid #cccccc;
+  width: 60px;
+  height: 30px;
+  margin-left: 4%;
+  color: #ffffff;
+}
+.ratioTypeCheck:hover{
+
+  cursor: pointer;
+}
+.ratioType{
+  border: 1px solid #cccccc;
+  background-color: #ffffff;
+  width: 60px;
+  height: 30px;
+  margin-left: 4%;
+}
+.ratioType:hover {
+  cursor: pointer;
+}
+#radioForm{
+  width: 300px;
+  height: 200px;
+}
+.crossQuestion{
+  margin-top: 1%;
+  /*margin-left: 5%;*/
+  display: flex;
+}
+.startAnalysis{
+  margin-left: 2%;
+  margin-top: 3px;
+  border: 1px solid #cccccc;
+  background-color: #FFFFFF;
+}
+.startAnalysis:hover {
+  cursor: pointer;
+  background-color: #66b1ff;
+  color: #ffffff;
+}
+.crossForm{
+  width: 90%;
+  margin-top: 1%;
+  margin-left: 3%;
 }

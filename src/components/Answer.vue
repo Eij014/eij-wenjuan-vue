@@ -37,7 +37,7 @@
             </div>
             <!--问题列表-->
             <div
-              :class="questionActive==index ? 'userQuestionBoxActive' : 'userQuestionBox'"
+              class="userQuestionBox"
               v-for="(question,index) in questionVOList" :key="index"
               @click="questionActive=index">
               <div style="margin-top: 5px;margin-bottom: 5px;margin-left: 10px">
@@ -214,7 +214,8 @@
           method: 'GET',
           url: '/wenjuan/detail',
           params: {
-            wenjuanId: wenjuanId
+            wenjuanId: wenjuanId,
+            type:'recycle'
           }
         }).then((res) => {
         this.wenjuanId = res.data.data.wenjuanId;
