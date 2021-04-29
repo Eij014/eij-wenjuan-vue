@@ -143,8 +143,8 @@
             orient: 'vertical',
             x: 'left',
             y: 'top',
-            top: '60%',
-            left:'78%',
+            top: '66%',
+            left:'83%',
             itemWidth: 12,
             itemHeight: 12
           };

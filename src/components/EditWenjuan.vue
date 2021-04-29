@@ -34,8 +34,6 @@
                   @dragstart="questionDragStart($event,questionTypeList[0])"
                   @drag="testing($event,questionTypeList[0])"
                   @dragend="questionDragEnter($event,questionTypeList[0])">
-                <!--onmousedown="mouseDown()"-->
-                <!--onmouseup="mouseUp()"-->
                 <img class="imgCenter" src="../assets/icon/singleChoice.png"/>
                 <div style="font-size: medium">单选题</div>
               </div>
@@ -72,7 +70,12 @@
       </div>
       <div class="wenjuanEditCenterMid">
         <div id="questionHeader" @click="showHeaderControl = true; questionActive= -1;deleteActive = -1">
-          <img class="editingWenjuanImg" :src="this.imgUrl"/>
+          <div class="imageUploadHasImg">
+            <input class="inputUploadWenjuanImg" accept="image/*" name="multipartFile" id="uploadWenjuanImg"
+                   v-on:change="uploadWenjuanImg()" type="file">
+            <img class="editingWenjuanImg" :src="this.imgUrl"/>
+          </div>
+
           <div class="questionWel">
             <div class="wenjuanTitleCenter" style="font-size: large">{{wenjuanTitle}}</div>
             <p></p>
@@ -514,40 +517,37 @@
       },
       mouseDown(event){
         let test = window.event;
-        console.log('鼠标摁下了')
-        console.log(test.target)
-        console.log('当前位置classList=')
-        console.log(test.target.classList);
       },
       mouseUp(event) {
         let test = window.event;
-        console.log('鼠标松开了')
-        console.log(test.target)
-        console.log('当前位置classList=')
-        console.log(test.target.classList);
       },
       questionDragStart(e,questionType) {
           this.draggingQuestion = questionType;
-            e.dataTransfer.dropEffect = 'move'//为需要移动的元素设置dragstart事件
-        $(".question1").draggable({
-          cursor: "move"
-        });
-        console.log('拖拽开始了')
+        console.log( e.dataTransfer.dropEffect)
+        console.log(e.dataTransfer.effectAllowed)
+
+//        e.DataTransfer.effectAllowed ='move'
+        console.log("鼠标样式修改")
+        console.log( e.dataTransfer.dropEffect)
+        console.log(e.dataTransfer.effectAllowed)
+        document.getElementsByClassName('question')[0].style.cursor= 'pointer';
+        $(".question2").style.cursor= 'pointer';
 
       },
       questionDragOn(e) {
 
       },
+      dragover(event) {
+        event.preventDefault()
+        event.dataTransfer.dropEffect = 'move'
+        event.dataTransfer.effectAllowed ='move'
+      },
       questionDragging(e, questionType) {
-//        console.log(e);
-//        console.log(questionType);
-        e.dataTransfer.dropEffect = 'move'// e.dataTransfer.dropEffect="move";//在dragenter中针对放置目标来设置!
+//        e.dataTransfer.dropEffect = 'move'//为需要移动的元素设置dragstart事件
+        e.dataTransfer.effectAllowed ='move'
+        e.preventDefault()
         let elementArray = document.elementsFromPoint(e.pageX, e.pageY);
         this.mouseY = e.pageY;
-//        console.log('原y坐标')
-//        console.log(this.mouseAfterMoveY)
-//        console.log('现y坐标')
-//        console.log(e.pageY)
         if (e.pageY != this.mouseAfterMoveY) {
           for (let element of elementArray) {
             let classList = element.classList;
@@ -559,7 +559,7 @@
                 //在空白区域上额外显示一个待插入题目
                 if (this.questionVOList.length == 0 && questionInserting.length == 0) {
                   this.inserting = true;
-                  var dom = document.createElement('div');
+                  let dom = document.createElement('div');
                   dom.className = 'questionInserting';
                   //题型图标
                   let img = document.createElement('img');
@@ -588,7 +588,7 @@
 //                    }
                     //问题区域在网页可见区域中的高度
                     let questionHeight = question.offsetHeight
-                    var dom = document.createElement('div');
+                    let dom = document.createElement('div');
                     dom.className = 'questionInsertingHasQuestion';
                     //题型图标
                     let img = document.createElement('img');
@@ -649,6 +649,25 @@
         }
         this.mouseAfterMoveY = e.pageY;
       },
+      uploadWenjuanImg() {
+        let file = document.getElementById("uploadWenjuanImg").files[0];
+        let formdata1 = new FormData();// 创建form对象
+        formdata1.append('multipartFile', file);
+        formdata1.append('name', 'picture');// 通过append向form对象添加数据,可以通过append继续添加数据
+        this.axios({
+          method: 'POST',
+          url: 'wenjuan/upload/image',
+          withCredentials: true,
+          header: {
+            'Content-Type': 'multipart/form-data;charset=utf-8',
+          },
+          data: formdata1
+        }).then((res) => {
+          this.imgUrl = res.data.data;
+
+
+      });
+      },
       addQuestionWithIndex(questionType, index) {
         switch (questionType.nameEn) {
           case 'singleChoice':
@@ -668,7 +687,7 @@
         }
       },
       questionDragEnter(e, questionType) {
-          e.dataTransfer.effectAllowed = 'move'//为需要移动的元素设置dragstart事件
+
         this.inserting = false;
         //删除拖拽过程中创建的dom
         let questionElement = document.getElementsByClassName('questionList')[0];
@@ -766,22 +785,22 @@
         this.showHeaderControl = false;
       },
       addOption(type, optionList) {
-        var length = this.convertToChinaNum(optionList.length + 1);
-        var option = {
+        let length = this.convertToChinaNum(optionList.length + 1);
+        let option = {
           "optionName": type == 'picture' ? '' : "选项" + length
         }
 
         optionList.push(option);
       },
       addOptionWithIndex(optionList, index) {
-        var length = this.convertToChinaNum(index + 1);
-        var option = {
+        let length = this.convertToChinaNum(index + 1);
+        let option = {
           "optionName": "选项" + length
         }
         optionList.splice(index, 0, option);
       },
       addPicOptionWithIndex(optionList, index){
-        var option = {
+        let option = {
           "optionName": ''
         }
         optionList.splice(index, 0, option);
@@ -793,9 +812,9 @@
         this.questionVOList.splice(index, 1);
       },
       uploadVideo(question) {
-        var file = document.getElementById("userUploadVideo").files[0];
-        console.log(file);
-        var formdata1 = new FormData();// 创建form对象
+        let file = document.getElementById("userUploadVideo").files[0];
+
+        let formdata1 = new FormData();// 创建form对象
         formdata1.append('multipartFile', file);
         formdata1.append('name', 'video');// 通过append向form对象添加数据,可以通过append继续添加数据
         this.axios({
@@ -812,8 +831,8 @@
       });
       },
       uploadImg(option) {
-        var file = document.getElementById("userUploadImg").files[0];
-        var formdata1 = new FormData();// 创建form对象
+        let file = document.getElementById("userUploadImg").files[0];
+        let formdata1 = new FormData();// 创建form对象
         formdata1.append('multipartFile', file);
         formdata1.append('name', 'name');// 通过append向form对象添加数据,可以通过append继续添加数据
         this.axios({
@@ -839,6 +858,7 @@
           data: {
             wenjuanId: this.wenjuanId,
             wenjuanTitle: this.wenjuanTitle,
+            folderId:this.$router.currentRoute.query.folderId,
             imgUrl : this.imgUrl,
             welcomeMsg: this.welcomeMsg,
             questionVOList: this.questionVOList
@@ -866,20 +886,27 @@
       });
       },
       goHome() {
-        this.$router.push({path: '/home'})
+        console.log("文件夹id = ")
+        console.log(this.$router.currentRoute.query.folderId)
+        if (this.$router.currentRoute.query.folderId != 0
+            && this.$router.currentRoute.query.folderId != undefined) {
+          this.$router.push({path: '/folder'})
+        } else {
+          this.$router.push({path: '/home'});
+        }
       },
       convertToChinaNum(num) {
-        var arr1 = new Array('零', '一', '二', '三', '四', '五', '六', '七', '八', '九');
-        var arr2 = new Array('', '十', '百', '千', '万', '十', '百', '千', '亿', '十', '百', '千', '万', '十', '百', '千', '亿');//可继续追加更高位转换值
+        let arr1 = new Array('零', '一', '二', '三', '四', '五', '六', '七', '八', '九');
+        let arr2 = new Array('', '十', '百', '千', '万', '十', '百', '千', '亿', '十', '百', '千', '万', '十', '百', '千', '亿');//可继续追加更高位转换值
         if (!num || isNaN(num)) {
           return "零";
         }
-        var english = num.toString().split("")
-        var result = "";
-        for (var i = 0; i < english.length; i++) {
-          var des_i = english.length - 1 - i;//倒序排列设值
+        let english = num.toString().split("")
+        let result = "";
+        for (let i = 0; i < english.length; i++) {
+          let des_i = english.length - 1 - i;//倒序排列设值
           result = arr2[i] + result;
-          var arr1_index = english[des_i];
+          let arr1_index = english[des_i];
           result = arr1[arr1_index] + result;
         }
         //将【零千、零百】换成【零】 【十零】换成【十】

@@ -32,9 +32,13 @@
   /*margin:  0px 0px 0px 20px;*/
 }
 #title{
-  width: 10%;
-  /*margin-left: 1%;*/
-  margin-left: -80%;
+  width: 6%;
+  margin-left: 3%;
+  font-size: 25px;
+  font-weight: 900;
+  font-family: "Times New Roman", Times, serif;
+  position: absolute;
+  /*margin-left: -0%;*/
 }
 .userLogin {
   /*margin: -30px 0px 0px 1400px;*/
@@ -82,13 +86,29 @@
 #myWenjuan {
   /*margin: 43px 0px 50px 20px;*/
   /*font-size: larger;*/
-  margin-top: 4%;
+  margin-top: 2%;
   margin-left: 3%;
   font-size: 24px;
   font-weight: 500;
   color: rgb(31, 35, 41);
   font-family: arial,"Hiragino Sans GB","Microsoft Yahei",sans-serif;
 
+}
+.myFolder{
+  margin-top: 2%;
+  margin-left: 3%;
+  font-size: 24px;
+  font-weight: 500;
+  color: rgb(31, 35, 41);
+  font-family: arial,"Hiragino Sans GB","Microsoft Yahei",sans-serif;
+}
+.myFolderLeft {
+  margin-top: 2%;
+  margin-left: 1%;
+  font-size: 24px;
+  font-weight: 500;
+  color: rgb(31, 35, 41);
+  font-family: arial,"Hiragino Sans GB","Microsoft Yahei",sans-serif;
 }
 /**
  * 创建问卷
@@ -109,6 +129,25 @@
   /*font-size: medium;*/
 }
 #createWenjuanBox:hover {
+  box-shadow: 0 9px 20px rgba(92,109,177,.2) !important;
+  cursor: pointer;
+}
+#createWenjuanBoxInFolder {
+  margin-top: 1%;
+  width: 22.41%;
+  height: 250.35px;
+  margin-left: 3%;
+  border:1px solid #cccccc;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  /*!*color: #a3a3a3;*!*/
+  /*!*display: table-cell;*!*/
+  vertical-align: middle;
+  text-align: center;
+  padding: 6.7% 0;
+  /*font-size: medium;*/
+}
+#createWenjuanBoxInFolder:hover {
   box-shadow: 0 9px 20px rgba(92,109,177,.2) !important;
   cursor: pointer;
 }
@@ -138,7 +177,24 @@
   cursor: pointer;
 
 }
-
+.userWenjuanBoxInFolder{
+  top:5%;
+  margin-bottom: 2%;
+  width: 30%;
+  border:1px solid #cccccc;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  vertical-align: middle;
+  display: inline-block;
+  font-size: 15px;
+  position: relative;
+  height: 250.35px;
+  overflow: hidden;
+}
+.userWenjuanBoxInFolder:hover {
+  box-shadow: 0 9px 20px rgba(92,109,177,.2) !important;
+  cursor: pointer;
+}
 .userWenjuanBoxWenjuanTitle {
   margin-top: 2%;
   margin-left: 5%;
@@ -185,10 +241,21 @@
   display: flex;
 }
 #wenjuanList {
-  /*margin: -212px 0px 0px 260px;*/
-  /*height: 430px;*/
-  width: 100%;
+   /*margin: -212px 0px 0px 260px;*/
+   /*height: 430px;*/
+   width: 100%;
 
+ }
+#folderList {
+  /*margin: -212px 0px 0px 260px;*/
+  width: 100%;
+  margin-left: 2%;
+  margin-top: 1%;
+  display: flex;
+  font-size: 15px;
+  /*position: relative;*/
+  overflow: hidden;
+  flex-wrap: wrap;
 }
 #wenjuanBox {
   /*width: 1450px;*/
@@ -642,6 +709,8 @@ li{
   border-right: solid #ACC0D8 1px;
 }
 .editingWenjuanImg {
+  margin-top: -20%;
+  margin-left: -2%;
   width: 840px;
   height: 200px;
 }
@@ -1327,9 +1396,13 @@ width: 400px;
   display: flex;
 }
 .startAnalysis{
+  width: 6%;
+  text-align: center;
+  padding-top: 0.2%;
   margin-left: 2%;
   margin-top: 3px;
   border: 1px solid #cccccc;
+  border-redius:20px;
   background-color: #FFFFFF;
 }
 .startAnalysis:hover {
@@ -1341,4 +1414,136 @@ width: 400px;
   width: 90%;
   margin-top: 1%;
   margin-left: 3%;
+}
+.pagging{
+
+}
+.paggingTop{
+  margin-top: 18.2%;
+}
+.paggingTopFolder{
+  margin-top: 21.9%;
+}
+.imageOptionPreview {
+  width: 200px;
+  height: 120px;
+}
+.inputUploadWenjuanImg {
+  opacity: 0;
+  width: 840px;
+  height: 160px;
+}
+.wenjuanSearch{
+
+}
+.otherOperate{
+  margin-right: 4%;
+  margin-top:0.5%;
+}
+.menuList{
+  background-color: #5daf34;
+  position: absolute;
+  width: 29%;
+  margin-left: 10%;
+  height: 60px;
+  display: flex;
+  border-left: 1px solid;
+  border-right: 1px solid;
+}
+.sysMenu{
+  width: 113px;
+  height: 60px;
+  padding-top: 15px;
+  text-align: center;
+  font-size: 18px;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  font-weight: 100;
+  background-color: #ffffff;
+
+}
+.sysMenu:hover {
+  cursor: pointer;
+  background-color: #66b1ff;
+  color: #ffffff;
+}
+.sysMenuCheck{
+  /*width: 26%;*/
+
+  width: 113px;
+  height: 60px;
+  padding-top: 15px;
+  text-align: center;
+  font-size: 18px;
+  border-left: 1px solid;
+  border-right: 1px solid;
+  font-weight: 100;
+  background-color: #66b1ff;
+  color: #ffffff;
+}
+.createFolderButton{
+  border:1px solid #cccccc;
+  width: 10%;
+  text-align: center;
+  border-radius: 2px;
+  margin-left: 25%;
+  margin-top: 2%;
+}
+.createFolderButton:hover {
+  background-color: #66b1ff;
+  cursor: pointer;
+  color: #ffffff;
+}
+#createFolderBox {
+  margin-top: 1%;
+  width: 15%;
+  height: 150.35px;
+  margin-left: 3%;
+  border:1px solid #cccccc;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  /*!*color: #a3a3a3;*!*/
+  /*!*display: table-cell;*!*/
+  vertical-align: middle;
+  text-align: center;
+  padding: 3.7% 0;
+  /*font-size: medium;*/
+}
+
+#createFolderBox:hover{
+  box-shadow: 0 9px 20px rgba(92,109,177,.2) !important;
+  cursor: pointer;
+}
+.folderPicture{
+  width: 170px;
+  /*margin-top: -2%;*/
+  margin-bottom: 10%;
+}
+.folderPicture:hover{
+  margin-top: -1%;
+  cursor: pointer;
+}
+.folderNameClass {
+  margin-left: 1%;
+  margin-top:-3%;
+  position: absolute;
+  color: #66b1ff;
+}
+#rightClickDropDown{
+  width: 100px;
+  height: 50px;
+  border:1px solid #cccccc;
+  position: absolute;
+  display: none;
+  top:0px;
+  left: 0px;
+  background-color: #FFB15B;
+}
+.folderOtherOperate{
+  width: 100px;
+  margin-left: -1px;
+}
+.folderOtherOperate:hover {
+  background-color: #cccccc;
+  color: #ffffff;
 }

@@ -85,7 +85,7 @@
           method: 'GET',
           url: '/wenjuan/analysis/get/recycle/process',
           params: {
-            wenjuanId:2707350
+            wenjuanId:this.wenjuanId
           }
         }).then((res) => {
           mapData = res.data.data.chinaMapData;
@@ -211,7 +211,7 @@
           visualMap: { // 左下角的颜色区域
             type: 'piecewise', // 定义为分段型 visualMap
             min: 0,
-            max: this.recycleCount,
+            max: 50,
             itemWidth: 40,
             bottom: 60,
             left: 15

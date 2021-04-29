@@ -86,9 +86,7 @@
                 </div>
                 <!--有图片-->
                 <div class="imageUploadHasImg" v-else>
-                  <input class="imgUploadInputHasImgInput" accept="image/*" name="multipartFile" id="userUploadImgHasImg"
-                         v-on:change="uploadImg(option)" type="file">
-                  <img class="uploadPictureHasImg" :src="option.optionName"/>
+                  <img class="imageOptionPreview" :src="option.optionName"/>
                 </div>
               </el-radio>
             </div>
@@ -237,7 +235,15 @@
       phoneVO() {
         this.phoneActive = 0;
         this.computerActive = -1;
-      }
+      },
+      imageUploadHasImgJudge(optionList) {
+        for (let option of optionList) {
+          if(option == '') {
+            return 'uploadPictureHasImgAndHasBlankImg';
+          }
+        }
+        return 'uploadPictureHasImg';
+      },
 
     },
 

@@ -2,13 +2,13 @@
   <div class="cross">
     <div class="crossQuestion">
       <div style="margin-left: 3%">
-        <vxe-select v-model="questionX" placeholder="questionX" size="medium" clearable>
+        <vxe-select v-model="questionX" placeholder="questionX" size="medium" multiple clearable>
             <vxe-option v-for="question in questionList" :key="question.questionId" :value="question.questionId"
                       :label="question.title"></vxe-option>
         </vxe-select>
       </div>
       <div style="margin-left: 3%">
-        <vxe-select v-model="questionY" placeholder="questionY" size="medium" clearable>
+        <vxe-select v-model="questionY" placeholder="questionY" size="medium" multiple clearable>
           <vxe-option v-for="question in questionList" :key="question.questionId" :value="question.questionId"
                       :label="question.title"></vxe-option>
         </vxe-select>
@@ -40,66 +40,13 @@
       require('echarts');
       require("echarts/lib/component/legend");
       return {
-        questionY:'',
-        questionX:'',
+        questionY:[],
+        questionX:[],
         questionList:[
-//          {
-//            questionId:1,
-//            title:'满意度'
-//          },
-//          {
-//            questionId:2,
-//            title:'选项'
-//          },
-//          {
-//            questionId:3,
-//            title:'性别'
-//          },
-//          {
-//            questionId:4,
-//            title:'职业'
-//          }
         ],
 
 
         crossAnalysisVOList: [
-//          {
-//            questionX: '满意度',
-//            questionY: '选项',
-//            columns: ['X/Y', '选项二', '选项三', '合计'],
-//            dataList: [
-//              {
-//                'X/Y': '很不满意',
-//                '选项二': '0(0.00%)',
-//                '选项三': '0(0.00%)',
-//                '合计': '0'
-//              },
-//              {
-//                'X/Y': '不满意',
-//                '选项二': '0(0.00%)',
-//                '选项三': '0(0.00%)',
-//                '合计': '0'
-//              },
-//              {
-//                'X/Y': '一般',
-//                '选项二': '0(0.00%)',
-//                '选项三': '0(0.00%)',
-//                '合计': '0'
-//              },
-//              {
-//                'X/Y': '满意',
-//                '选项二': '1(100.00%)',
-//                '选项三': '0(0.00%)',
-//                '合计': '1'
-//              },
-//              {
-//                'X/Y': '很满意',
-//                '选项二': '0(0.00%)',
-//                '选项三': '0(0.00%)',
-//                '合计': '0'
-//              }
-//            ]
-//          }
         ],
 
       }
@@ -117,8 +64,6 @@
         });
       },
       crossAnalysis() {
-        console.log(this.questionX);
-        console.log(this.questionY);
         if (this.questionX==0 || this.questionY == 0
             || this.questionX==null || this.questionY==null) {
           this.$message({
@@ -134,8 +79,8 @@
             },
             data: {
               wenjuanId: this.wenjuanId,
-              questionIdXList:[this.questionX],
-              questionIdYList:[this.questionY]
+              questionIdXList:this.questionX,
+              questionIdYList:this.questionY
             }
           }).then((res) => {
               this.crossAnalysisVOList = res.data.data;

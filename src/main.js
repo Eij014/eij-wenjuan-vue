@@ -36,6 +36,7 @@ global.axios = axios
 Vue.prototype.axios = axios
 Vue.config.productionTip = false
 Vue.prototype.$video = Video
+Vue.prototype.$XModal = VXETable.modal
 Vue.prototype.$layer = layer(Vue, {
   msgtime: 3 //目前只有一项，即msg方法的默认消失时间，单位：秒
 });

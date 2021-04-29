@@ -85,7 +85,7 @@
                   <div class="imageUploadHasImg">
                     <input class="imgUploadInputHasImgInput" accept="image/*" name="multipartFile" id="userUploadImgHasImg"
                            v-on:change="uploadImg(option)" type="file">
-                    <img class="uploadPictureHasImg" :src="option.optionName"/>
+                    <img class="imageOptionPreview" :src="option.optionName"/>
                   </div>
                 </el-radio>
               </el-radio-group>

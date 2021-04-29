@@ -1,12 +1,12 @@
 <template xmlns:v-on="http://www.w3.org/1999/xhtml">
-  <div id="home">
+  <div id="home" @click="closeFolderRightClickOperate($event)">
     <div class="homeHeader">
       <img id="img" src="../assets/icon/wenjuan-title.png"/>
       <div id="title">Eij问卷</div>
       <div class="menuList">
         <div v-for="(menu,index) in sysMenuList" :key="index">
           <div :class="getSysMenuClass(menu)" @click="changeMenu(menu)">
-            <img style="height: 18px;width: 18px" :src="menu.icon"/>
+            <img style="height: 18px;width: 21px" :src="menu.icon"/>
             {{menu.nameCn}}
           </div>
         </div>
@@ -66,7 +66,18 @@
       </PopUps>
     </div>
     <div class=systemCenter>
-      <div id="myWenjuan">我的问卷</div>
+      <div style="display: flex">
+        <div v-if="currentFolderId != 0"
+             style="width: 25px;height:25px;margin-left: 0.4%;margin-top: 2%">
+          <img src="../assets/icon/arrowReturn-right.png"
+            @click="returnFolder()">
+        </div>
+        <div :class="currentFolderId == 0 ? 'myFolder' : 'myFolderLeft' ">我的文件夹
+        </div>
+        <div style="margin-top: 2.4%;margin-left: 1%" v-if="currentFolderId !=0">
+          -> {{currentFolderName}}
+        </div>
+      </div>
       <div style="display: flex;margin-left:78%">
         <vxe-button class="otherOperate" size="small">
           <template #default>更多操作</template>
@@ -74,10 +85,73 @@
             <vxe-button type="text">新建文件夹</vxe-button>
           </template>
         </vxe-button>
-        <vxe-input class="wenjuanSearch" v-model="keywords" placeholder="输入问卷名搜索" type="search"
+        <vxe-input class="wenjuanSearch" v-model="keywords" placeholder="输入文件夹名搜索" type="search"
                    @keyup.enter="wenjuanListFn(1,$event)" @search-click="wenjuanListFn(1,$event)"></vxe-input>
       </div>
-      <div id="wenjuanBox">
+      <vxe-modal v-model="folderIsShow" title="新建文件夹" width="600" height="200" show-zoom resize remember>
+        <template #default>
+          <vxe-form :data="folderFormData" :rules="folderFormRule" title-align="right" title-width="60">
+            <vxe-form-item title="基本信息" span="24" title-align="left" title-width="200px" :title-prefix="{icon: 'fa fa-address-card-o'}"></vxe-form-item>
+            <vxe-form-item title="名称" field="name" span="12" :item-render="{name: 'input', attrs: {placeholder: '请输入名称'}}"></vxe-form-item>
+
+
+          </vxe-form>
+          <div style="display: flex">
+          <div class="createFolderButton" @click="createFolder()">提交</div> <div class="createFolderButton" @click="folderIsShow=false">取消</div></div>
+        </template>
+      </vxe-modal>
+      <vxe-modal v-model="renameFolderIsShow" title="重命名" width="600" height="200" show-zoom resize remember>
+        <template #default>
+          <vxe-form :data="folderFormData" :rules="folderFormRule" title-align="right" title-width="60">
+            <vxe-form-item title="基本信息" span="24" title-align="left" title-width="200px" :title-prefix="{icon: 'fa fa-address-card-o'}"></vxe-form-item>
+            <vxe-form-item title="名称" field="name" span="12" :item-render="{name: 'input', attrs: {placeholder: '请输入名称'}}"></vxe-form-item>
+
+
+          </vxe-form>
+          <div style="display: flex">
+            <div class="createFolderButton" @click="renameFolder()">提交</div> <div class="createFolderButton" @click="renameFolderIsShow=false">取消</div></div>
+        </template>
+      </vxe-modal>
+      <div v-if="currentFolderId==0">
+          <div id="wenjuanBox">
+            <div id="createFolderBox" @click="folderIsShow=true"
+                 v-on:mouseover="mouseleaveWenjuan2()">
+              <img class="imageCenter" src="../assets/icon/createWenjuan.png"/>
+              <div class="createWenjuanButton"  v-on:click="folderIsShow=true">
+                新建文件夹
+              </div>
+            </div>
+            <div id="folderList">
+              <li v-for="(folder,index) in folderList" :key="index" @click="goFolder(folder,1)"
+                  @click.right="folderRightClickOperate($event,folder)">
+                <img class="folderPicture" src="../assets/picture/folder.png"/>
+                <div class="folderNameClass">{{folder.folderName}}</div>
+              </li>
+              <div id="rightClickDropDown">
+                  <vxe-button class="folderOtherOperate" @click="renameFolderIsShow = true">重命名</vxe-button>
+                  <vxe-button class="folderOtherOperate" style="margin-left: -1px" @click="confirmEvent()">删除</vxe-button>
+              </div>
+            </div>
+          </div>
+          <div :class = "pageSize > 17 ? 'pagging' : 'paggingTopFolder'">
+            <div v-if="total > 18" class="page-bar">
+              <ul>
+                <li v-if="currentPage>1">
+                  <a style="font-size: medium" v-on:click="currentPage--,pageClick()">上一页</a>
+                </li>
+                <li v-if="currentPage==1"><a style="font-size: medium" class="banClick">上一页</a></li>
+                <li v-for="index in totalPage" style="font-size: medium" v-bind:class="{ 'active' : currentPage == index}">
+                  <a v-on:click="btnClick(index)">{{ index }}</a>
+                </li>
+                <li v-if="currentPage!=totalPage"><a style="font-size: medium" v-on:click="currentPage++,pageClick()">下一页</a>
+                </li>
+                <li v-if="currentPage==totalPage"><a style="font-size: medium" class="banClick">下一页</a></li>
+                <li><a style="font-size: medium">共<i>{{ total }}</i>个</a></li>
+              </ul>
+            </div>
+          </div>
+      </div>
+      <div style="display: flex" v-else>
         <div id="createWenjuanBox" @click="createWenjuan()"
              v-on:mouseover="mouseleaveWenjuan2()">
           <img class="imageCenter" src="../assets/icon/createWenjuan.png"/>
@@ -86,7 +160,7 @@
           </div>
         </div>
         <div id="wenjuanList">
-          <li v-for="(wenjuan,index) in wenjuanList" class="userWenjuanBox" :key="index">
+          <li v-for="(wenjuan,index) in wenjuanList" class="userWenjuanBoxInFolder" :key="index">
             <div v-on:click="createWenjuan(wenjuan.wenjuanId)"
                  v-on:mouseover="mouseoverWenjuan(wenjuan.wenjuanId)"
                  v-on:mouseleave="mouseleaveWenjuan()">
@@ -96,8 +170,8 @@
                 回收: {{wenjuan.recycleCount}}</div>
               <div class="userWenjuanBoxWenjuanOperate">
                 <!--<div class="userWenjuanShadowBr" v-if="mouseHoverWenjuanId!=wenjuan.wenjuanId">-->
-                       </br>
-                       </br>
+                </br>
+                </br>
                 <!--</div>-->
                 <div :class="mouseHoverWenjuanId!=wenjuan.wenjuanId ? 'userWenjuanBoxWenjuanOperateHold' :'userWenjuanBoxWenjuanOperateMove'">
                   <div :class="mouseHoverWenjuanId!=wenjuan.wenjuanId ? 'userWenjuanBoxWenjuanStatus' :'userWenjuanBoxWenjuanStatusHover'">
@@ -115,8 +189,8 @@
                   </br>
                   <div :class="mouseHoverWenjuanId==wenjuan.wenjuanId ? 'userWenjuanBoxWenjuanEdit' :'userWenjuanBoxWenjuanEditMove'" v-if="mouseHoverWenjuanId==wenjuan.wenjuanId">
                     <div style="width: 30%">
-                        <img class="mouseHoverOnWenjuanImg" src="../assets/icon/edit.png">
-                        编辑
+                      <img class="mouseHoverOnWenjuanImg" src="../assets/icon/edit.png">
+                      编辑
                     </div>
                     <div style="width: 30%" @click.stop="resultAnalysis(wenjuan.wenjuanTitle,wenjuan.wenjuanId,wenjuan.status)">
                       <img class="mouseHoverOnWenjuanImg" src="../assets/icon/resultAnalysis.png">
@@ -154,8 +228,7 @@
             </div>
           </li>
         </div>
-      </div>
-      <div :class = "pageSize > 3 ? 'pagging' : 'paggingTop'">
+        <div :class = "pageSize > 3 ? 'pagging' : 'paggingTop'">
         <div v-if="total > 6" class="page-bar">
           <ul>
             <li v-if="currentPage>1">
@@ -172,6 +245,8 @@
           </ul>
         </div>
       </div>
+
+      </div>
     </div>
   </div>
 
@@ -187,7 +262,7 @@
   Vue.prototype.axios = axios
   import PopUps from './PopUps.vue'
   export default {
-    name: 'Home',
+    name: 'folder',
     data () {
       if (this.userStatus()) {
         this.wenjuanListFn(1,null);
@@ -225,23 +300,39 @@
         timer: null,
         hoverEnterTime: 200,
         hoverLeaveTime: 10,
-        isShow: true,
+        folderIsShow: false,
+        renameFolderIsShow:false,
+        folderName:'',
         wenjuanIdDelete:0,
         loginBoxShowStatus: false,
         loginFormVisible: false,
         username: '',
         userheader: '../assets/icon/header.png',
         keywords:'',//搜索关键字
-        sysMenuTest:'myWenjuan',
+        sysMenuTest:'folder',
         totalPage: 0,
         total: 0,
         pageSize: 0,
         currentPage: 0,
-        wenjuanList: [],
+        folderList: [],
         registerDialog: false, //注册弹窗
         loginDialog: false, //登录弹窗
         userSettingStatus: false,//用户设置
+        wenjuanList:[],
         loginPower: false,
+        currentFolderId:0,//左键点击进入的文件夹id
+        currentFolderName:'',
+        rightClickFolderId:0,//右键点击的文件夹id
+        folderIdDelete:0,
+        folderFormData:{
+          name:''
+        },
+        folderFormRule:{
+          name: [
+            { required: true, message: '请输入名称' },
+            { min: 3, max: 5, message: '长度在 3 到 5 个字符' }
+          ],
+        },
         mouseHoverOnWenjuan:false, //鼠标hover在问卷上
         mouseHoverWenjuanId:0, //鼠标hover的问卷Id
         sysMenuList:[
@@ -309,10 +400,10 @@
       wenjuanListFn(index,e) {
         this.axios({
             method:'POST',
-            url:'/wenjuan/list',
+            url:'/wenjuan/folder/get/list',
             data: {
               currentPage: index,
-              pageSize: 6,
+              pageSize: 18,
               keywords:this.keywords==null ? '':this.keywords,
               folderId:0
             },
@@ -321,13 +412,16 @@
             }
           }
         ).then((res) => {
-          this.wenjuanList = res.data.data.wenjuanList;
+          this.folderList = res.data.data.wenjuanFolderList;
           this.total = res.data.data.total;
-          this.pageSize = this.wenjuanList.length;
+          this.pageSize = this.folderList.length;
           this.currentPage = res.data.data.currentPage;
           this.totalPage = res.data.data.totalPage;
           this.username = this.$cookies.get('userToken').split('-')[1];
         });
+      },
+      createWenjuan(wenjuanId) {
+        this.$router.push({path: '/editWenjuan', query: {wenjuanId: wenjuanId,folderId:this.currentFolderId}})
       },
       btnClick: function (data) {
         if (data != this.currentPage) {
@@ -348,11 +442,36 @@
         this.registerDialog = false;
         this.dialogFormVisible = true;
       },
-      createWenjuan(wenjuanId) {
-        this.$router.push({path: '/editWenjuan', query: {wenjuanId: wenjuanId}})
+      createFolder() {
+        this.axios({
+            method:'GET',
+            url:'/wenjuan/folder/create/update',
+            params:{
+              folderName:this.folderFormData.name
+            }
+          }
+        ).then((res) => {
+          if(res.data.code==0) {
+            this.$message({
+              type: 'success',
+              message: '创建成功'
+            });
+            this.folderIsShow = false
+            this.wenjuanListFn(1,null);
+          } else {
+            this.$message({
+              type: 'failed',
+              message: '创建失败,请重试'
+            });
+            this.wenjuanListFn = false
+          }
+        });
       },
       answerWenjuan(wenjuanId) {
         this.$router.push({path: '/editWenjuan', query: {wenjuanId: wenjuanId}})
+      },
+      returnFolder() {
+        this.currentFolderId = 0;
       },
       userLogout() {
         this.$cookies.remove('userToken');
@@ -567,6 +686,124 @@
             this.$router.push({path:'/resultAnalysis'});
             break;
         }
+      },
+      goFolder(folder, index) {
+        let elementArray = document.elementsFromPoint(e.pageX, e.pageY);
+        let go= true;
+        for (let element of elementArray) {
+          let id = element.id;
+          if (id == 'rightClickDropDown') {
+            go = false;
+          }
+        }
+        if (go) {
+          this.axios({
+              method:'POST',
+              url:'/wenjuan/list',
+              data: {
+                currentPage: index,
+                pageSize: 6,
+                keywords:this.keywords==null ? '':this.keywords,
+                folderId:folder.wenjuanFolderId
+              },
+              header:{
+                'Content-Type':'application/json'
+              }
+            }
+          ).then((res) => {
+            this.wenjuanList = res.data.data.wenjuanList;
+            this.total = res.data.data.total;
+            this.pageSize = this.wenjuanList.length;
+            this.currentPage = res.data.data.currentPage;
+            this.totalPage = res.data.data.totalPage;
+            this.username = this.$cookies.get('userToken').split('-')[1];
+            this.currentFolderId = folder.wenjuanFolderId;
+            this.currentFolderName = folder.folderName;
+          });
+        }
+
+      },
+      folderRightClickOperate(e,folder) {
+        e.preventDefault();
+        this.rightClickFolderId = folder.wenjuanFolderId;
+
+        let dropDown = document.getElementById('rightClickDropDown');
+        dropDown.style.top = e.pageY + 'px';
+        dropDown.style.left = e.pageX + 'px';
+        dropDown.style.display = 'block'
+      },
+      closeFolderRightClickOperate(e) {
+        let elementArray = document.elementsFromPoint(e.pageX, e.pageY);
+        let ifColse= true;
+        for (let element of elementArray) {
+          let id = element.id;
+          if (id == 'rightClickDropDown') {
+              ifColse = false;
+          }
+        }
+        if (ifColse) {
+          let dropDown = document.getElementById('rightClickDropDown');
+          dropDown.style.display = 'none'
+        }
+      },
+      renameFolder() {
+        this.axios({
+            method:'GET',
+            url:'/wenjuan/folder/create/update',
+            params:{
+              folderName:this.folderFormData.name,
+              folderId:this.rightClickFolderId
+            }
+          }
+        ).then((res) => {
+          if(res.data.code==0) {
+            this.$message({
+              type: 'success',
+              message: '重命名成功'
+            });
+            this.renameFolderIsShow = false
+            let dropDown = document.getElementById('rightClickDropDown');
+            dropDown.style.display = 'none'
+            this.wenjuanListFn(1,null);
+          } else {
+            this.$message({
+              type: 'failed',
+              message: '重命名失败,请重试'
+            });
+          }
+        });
+      },
+      confirmEvent() {
+
+        this.$XModal.confirm('您确定要删除吗？').then(type => {
+          console.log('type=' + type);
+          if (type =='confirm') {
+            this.axios({
+                method:'GET',
+                url:'/wenjuan/folder/delete',
+                params:{
+                  folderId:this.rightClickFolderId
+                }
+              }
+            ).then((res) => {
+              if(res.data.code==0) {
+                this.$message({
+                  type: 'success',
+                  message: '删除成功'
+                });
+                this.wenjuanListFn(1,null);
+                this.folderIdDelete = 0;
+                let dropDown = document.getElementById('rightClickDropDown');
+                dropDown.style.display = 'none'
+              } else {
+                this.$message({
+                  type: 'failed',
+                  message: '删除失败,请重试'
+                });
+              }
+            });
+          }
+        })
       }
     },
     computed: {

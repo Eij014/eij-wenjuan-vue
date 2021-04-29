@@ -47,6 +47,7 @@
     data () {
       return {
         wenjuanId: 0,
+        wenjuanTitle:'',
         currentPage:RecycleProcess,
         currentPageEn:'RecycleProcess',
         resultAnalysisCenterLeftMenu: [
@@ -77,14 +78,16 @@
         if (this.$router.currentRoute.query.wenjuanId != 0
           && this.$router.currentRoute.query.wenjuanId != undefined) {
           this.wenjuanId = this.$router.currentRoute.query.wenjuanId
-          console.log(this.wenjuanId);
-          console.log('test');
+          this.wenjuanTitle = this.$router.currentRoute.query.wenjuanTitle
         }
       },
       changeMenu(componentName, componentEn) {
         this.currentPageEn = componentName;
         this.currentPage = componentEn;
-      }
+      },
+      goHome() {
+        this.$router.push({path: '/home'})
+      },
     },
     created(){
       this.init();
