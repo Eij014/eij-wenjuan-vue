@@ -7,66 +7,68 @@
         {{ wenjuanTitle }}
       </div>
       <div class="headerCenter">
-        <div style="color: #0b97c4;margin-right: 5%">问卷制作</div>
-        <div style="margin-right: 5%"><img src="../assets/icon/arrowRight.png"/></div>
-        <div>问卷发布</div>
+        <div style="color: #0b97c4;margin-left: 6%">问卷模板</div>
+
       </div>
       <div class="headerRight">
         <div class="preview" @click="preview(wenjuanId)"><img id="imgPreview" src="../assets/icon/video.png"/>
           <div style="font-size: 14px">预览</div>
         </div>
-        <div class="wenjuanSave" @click="saveWenjuan()">
+
+        <div v-if="committer != 'admin'" class="wenjuanSave" @click="saveWenjuan()">
           <div style="font-size: 14px;margin-left: 30%">保存</div>
         </div>
-        <div class="wenjuanPublish" @click="publishWenjuan(wenjuanId)">
-          <div style="font-size: 14px;margin-left: 30%">发布</div>
+        <div class="wenjuanPublish" @click="quoteWenjuan(wenjuanId)">
+          <div style="font-size: 14px;margin-left: 30%">引用</div>
         </div>
       </div>
-        <!--<p class="horizontalLine"></p>-->
+      <!--<p class="horizontalLine"></p>-->
     </div>
 
     <div class="wenjuanEditCenter">
       <div class="wenjuanEditCenterLeft">
-        <div class="wenjuanEditCenterLeftSubTitle">基本控件</div>
-            <div id="questionBox">
-              <div
-                  @click="addSingleChoice(-1)" class="question1" draggable="true"
-                  @dragstart="questionDragStart($event,questionTypeList[0])"
-                  @drag="testing($event,questionTypeList[0])"
-                  @dragend="questionDragEnter($event,questionTypeList[0])">
-                <img class="imgCenter" src="../assets/icon/singleChoice.png"/>
-                <div style="font-size: medium">单选题</div>
-              </div>
-              <div @click="addMultipleChoice(-1)" class="question2" draggable="true"
-                   @dragstart="questionDragStart($event,questionTypeList[1])"
-                   @drag="testing($event,questionTypeList[1])"
-                   @dragend="questionDragEnter($event,questionTypeList[1])">
-                <img class="imgCenter" src="../assets/icon/check.png"/>
-                <div style="font-size: medium">多选题</div>
-              </div>
-              <!--<div @click="addScore()" class="question3" draggable="true">-->
-                <!--<img class="imgCenter" src="../assets/icon/score.png"/>-->
-                <!--<div style="font-size: medium">评分题</div>-->
-              <!--</div>-->
-              <div @click="addVideo(-1)" class="question1" draggable="true"
-                   @dragstart="questionDragStart($event,questionTypeList[2])"
-                   @drag="testing($event,questionTypeList[2])"
-                   @dragend="questionDragEnter($event,questionTypeList[2])">
-                <img class="imgCenter" src="../assets/icon/video.png"/>
-                <div style="font-size: medium">视频题</div>
-              </div>
-              <div @click="addPicture(-1)" class="question2" draggable="true"
-                   @dragstart="questionDragStart($event,questionTypeList[3])"
-                   @drag="testing($event,questionTypeList[3])"
-                   @dragend="questionDragEnter($event,questionTypeList[3])">
-                <img class="imgCenter" src="../assets/icon/picture.png"/>
-                <div style="font-size: medium">图片题</div>
-              </div>
-              <!--<div class="question3">-->
-                <!--<img class="imgCenter" src="../assets/icon/check.png"/>-->
-                <!--<div style="font-size: medium"></div>-->
-              <!--</div>-->
-            </div>
+        <div v-if="committer == 'admin'" style="margin-left: -1%"> 系统提供模板不可修改,
+          可引用后自行编辑</div>
+        <div v-if="committer != 'admin'" class="wenjuanEditCenterLeftSubTitle">基本控件</div>
+        <div v-if="committer != 'admin'" id="questionBox">
+          <div
+            @click="addSingleChoice(-1)" class="question1" draggable="true"
+            @dragstart="questionDragStart($event,questionTypeList[0])"
+            @drag="testing($event,questionTypeList[0])"
+            @dragend="questionDragEnter($event,questionTypeList[0])">
+            <img class="imgCenter" src="../assets/icon/singleChoice.png"/>
+            <div style="font-size: medium">单选题</div>
+          </div>
+          <div @click="addMultipleChoice(-1)" class="question2" draggable="true"
+               @dragstart="questionDragStart($event,questionTypeList[1])"
+               @drag="testing($event,questionTypeList[1])"
+               @dragend="questionDragEnter($event,questionTypeList[1])">
+            <img class="imgCenter" src="../assets/icon/check.png"/>
+            <div style="font-size: medium">多选题</div>
+          </div>
+          <!--<div @click="addScore()" class="question3" draggable="true">-->
+          <!--<img class="imgCenter" src="../assets/icon/score.png"/>-->
+          <!--<div style="font-size: medium">评分题</div>-->
+          <!--</div>-->
+          <div @click="addVideo(-1)" class="question1" draggable="true"
+               @dragstart="questionDragStart($event,questionTypeList[2])"
+               @drag="testing($event,questionTypeList[2])"
+               @dragend="questionDragEnter($event,questionTypeList[2])">
+            <img class="imgCenter" src="../assets/icon/video.png"/>
+            <div style="font-size: medium">视频题</div>
+          </div>
+          <div @click="addPicture(-1)" class="question2" draggable="true"
+               @dragstart="questionDragStart($event,questionTypeList[3])"
+               @drag="testing($event,questionTypeList[3])"
+               @dragend="questionDragEnter($event,questionTypeList[3])">
+            <img class="imgCenter" src="../assets/icon/picture.png"/>
+            <div style="font-size: medium">图片题</div>
+          </div>
+          <!--<div class="question3">-->
+          <!--<img class="imgCenter" src="../assets/icon/check.png"/>-->
+          <!--<div style="font-size: medium"></div>-->
+          <!--</div>-->
+        </div>
       </div>
       <div class="wenjuanEditCenterMid">
         <div id="questionHeader" @click="showHeaderControl = true; questionActive= -1;deleteActive = -1">
@@ -118,9 +120,9 @@
                 </video>
               </div>
               <div v-if="question.imgUrls==''" class="noVideoBox">
-                  <input class="videoUploadInput" accept="video/*" name="multipartFile" id="userUploadVideo"
-                         v-on:change="uploadVideo(question)" type="file">
-                  </input>
+                <input class="videoUploadInput" accept="video/*" name="multipartFile" id="userUploadVideo"
+                       v-on:change="uploadVideo(question)" type="file">
+                </input>
                 <img src="../assets/icon/createWenjuan.png"/>
               </div>
               <div class="videoOption">
@@ -135,7 +137,7 @@
               <!--没有图片-->
               <div class="uploadPicture" v-if="option.optionName==''">
                 <input class="imgUploadInput" accept="image/*" name="multipartFile" id="userUploadImg"
-                         v-on:change="uploadImg(option)" type="file">
+                       v-on:change="uploadImg(option)" type="file">
                 <img src="../assets/icon/createWenjuan.png"/>
               </div>
               <!--有图片-->
@@ -150,7 +152,7 @@
         </div>
         <br/>
       </div>
-      <div id="wenjuanEditCenterRight">
+      <div id="wenjuanEditCenterRight" v-if="committer != 'admin'">
         <div v-if="showHeaderControl">
           <div class="editControlTitle">头部控件</div>
           <p class="horizontalLine"></p>
@@ -244,7 +246,7 @@
     };
   }
   export default {
-    name: 'EditWenjuan',
+    name: 'EditTemplate',
     wenjuanId: 0,
     data () {
       if (this.$router.currentRoute.query.wenjuanId != 0
@@ -259,6 +261,7 @@
         questionActive: -1,
         deleteActive: -1,
         showHeaderControl: true,
+        committer:'',
         click:false, //鼠标是否摁下
         mouseX:0,//鼠标横坐标
         mouseY:0,//鼠标纵坐标
@@ -293,7 +296,7 @@
         ],
         wenjuanId: 0,
         draggingQuestion:null,
-        wenjuanTitle: '未命名问卷',
+        wenjuanTitle: '未命名模板',
         welcomeMsg: '非常感谢您能够参与调查，提供您的看法与意见，希望能够得到您的大力支持和合作，我们极其重视数据安全绝不会泄露任何您的隐私信息，现在我们马上就开始吧！',
         imgUrl: '',
         questionVOList: [],
@@ -354,9 +357,10 @@
             type:'edit'
           }
         }).then((res) => {
-        this.wenjuanId = res.data.data.wenjuanId;
+          this.wenjuanId = res.data.data.wenjuanId;
         this.wenjuanTitle = res.data.data.wenjuanTitle;
         this.welcomeMsg = res.data.data.welcomeMsg;
+        this.committer = res.data.data.committer;
         this.questionVOList = res.data.data.questionVOList;
         this.imgUrl = res.data.data.imgUrl;
       });
@@ -522,7 +526,7 @@
         let test = window.event;
       },
       questionDragStart(e,questionType) {
-          this.draggingQuestion = questionType;
+        this.draggingQuestion = questionType;
         console.log( e.dataTransfer.dropEffect)
         console.log(e.dataTransfer.effectAllowed)
 
@@ -748,8 +752,8 @@
                   }
                 }
               }
+            }
           }
-        }
 //        if (window.event.target.classList.indexOf('questionList') > -1) {
 //          console.log('当前鼠标位置')
 //          console.log('在问题列表区域')
@@ -826,7 +830,7 @@
           },
           data: formdata1
         }).then((res) => {
-        question.imgUrls = res.data.data;
+          question.imgUrls = res.data.data;
 
       });
       },
@@ -858,8 +862,8 @@
           data: {
             wenjuanId: this.wenjuanId,
             wenjuanTitle: this.wenjuanTitle,
-            folderId:this.$router.currentRoute.query.folderId,
-            type:'self',
+            folderId:0,
+            type:'template',
             imgUrl : this.imgUrl,
             welcomeMsg: this.welcomeMsg,
             questionVOList: this.questionVOList
@@ -871,29 +875,24 @@
       preview(wenjuanId) {
         this.$router.push({path: '/previewWenjuan', query: {wenjuanId: wenjuanId}})
       },
-      publishWenjuan(wenjuanId) {
+      quoteWenjuan(wenjuanId) {
         this.axios({
           method: 'GET',
-          url: '/wenjuan/publish',
+          url: '/wenjuan/quote',
           params: {
             wenjuanId: this.wenjuanId
           }
         }).then((res) => {
-        if (res.data.data == 1) {
-          this.$router.push({path: '/publish', query: {wenjuanId: wenjuanId}})
-        } else {
-          alert(res.data.message);
-        }
-      });
+          let newWenjuanId = res.data.data;
+          this.$router.push({path: '/editWenjuan', query: {wenjuanId: newWenjuanId}})
+        });
       },
       goHome() {
-        console.log("文件夹id = ")
-        console.log(this.$router.currentRoute.query.folderId)
         if (this.$router.currentRoute.query.folderId != 0
-            && this.$router.currentRoute.query.folderId != undefined) {
+          && this.$router.currentRoute.query.folderId != undefined) {
           this.$router.push({path: '/folder'})
         } else {
-          this.$router.push({path: '/home'});
+          this.$router.push({path: '/template'});
         }
       },
       convertToChinaNum(num) {

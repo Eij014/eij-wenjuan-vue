@@ -12,6 +12,8 @@ import RecycleCross from '@/components/RecycleCross'
 import testVue from '@/components/test'
 import Folder from '@/components/WenjuanFolder'
 import App from '@/App'
+import Template from '@/components/Template'
+import EditTemplate from '@/components/EditTemplate'
 Vue.use(Router)
 
 //解决它的提示是 避免到当前位置的冗余导航。 简单来说就是重复触发了同一个路由。
@@ -84,6 +86,16 @@ export default new Router({
       path:'/folder',
       name:'folder',
       component:Folder
+    },
+    {
+      path:'/template',
+      name:'template',
+      component:Template
+    },
+    {
+      path:'/editTemplate',
+      name:'editTemplate',
+      component:EditTemplate
     }
   ]
 })

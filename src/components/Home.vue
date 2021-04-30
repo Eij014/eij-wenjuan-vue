@@ -314,7 +314,8 @@
               currentPage: index,
               pageSize: 6,
               keywords:this.keywords==null ? '':this.keywords,
-              folderId:0
+              folderId:0,
+              type:'self'
             },
             header:{
               'Content-Type':'application/json'

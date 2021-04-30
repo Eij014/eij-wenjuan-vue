@@ -704,7 +704,8 @@
                 currentPage: index,
                 pageSize: 6,
                 keywords:this.keywords==null ? '':this.keywords,
-                folderId:folder.wenjuanFolderId
+                folderId:folder.wenjuanFolderId,
+                type:'self'
               },
               header:{
                 'Content-Type':'application/json'
