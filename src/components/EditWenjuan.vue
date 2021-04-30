@@ -44,10 +44,14 @@
                 <img class="imgCenter" src="../assets/icon/check.png"/>
                 <div style="font-size: medium">多选题</div>
               </div>
-              <!--<div @click="addScore()" class="question3" draggable="true">-->
-                <!--<img class="imgCenter" src="../assets/icon/score.png"/>-->
-                <!--<div style="font-size: medium">评分题</div>-->
-              <!--</div>-->
+              <div @click="addInput(-1)" class="question3" draggable="true"
+                   @dragstart="questionDragStart($event,questionTypeList[4])"
+                   @drag="testing($event,questionTypeList[4])"
+                   @dragend="questionDragEnter($event,questionTypeList[4])">
+                <img class="imgCenter" src="../assets/icon/input.png"/>
+                <div style="font-size: medium">输入框</div>
+              </div>
+
               <div @click="addVideo(-1)" class="question1" draggable="true"
                    @dragstart="questionDragStart($event,questionTypeList[2])"
                    @drag="testing($event,questionTypeList[2])"
@@ -62,11 +66,36 @@
                 <img class="imgCenter" src="../assets/icon/picture.png"/>
                 <div style="font-size: medium">图片题</div>
               </div>
-              <!--<div class="question3">-->
-                <!--<img class="imgCenter" src="../assets/icon/check.png"/>-->
-                <!--<div style="font-size: medium"></div>-->
-              <!--</div>-->
+              <div @click="addScore()" class="question3" draggable="true"
+                   @dragstart="questionDragStart($event,questionTypeList[5])"
+                   @drag="testing($event,questionTypeList[5])"
+                   @dragend="questionDragEnter($event,questionTypeList[5])">
+                <img class="imgCenter" src="../assets/icon/score.png"/>
+                <div style="font-size: medium">评分题</div>
+              </div>
             </div>
+         </div>
+        <div class="questionBank">
+          <div class="wenjuanEditCenterLeftSubTitle" style="margin-left: 7%">题库</div>
+          <div class="questionBankQuestion" v-for="(question, index) in questionBank" :key="index"
+               draggable="true"
+            @mouseover="questionBankHoverQuestion=question.questionId"
+            @mouseleave="questionBankHoverQuestion=0"
+            @click="addQuestionFromQuestionBank(question,-1)"
+            @dragstart="questionDragStart($event,questionTypeList[4])"
+            @drag="testingBank($event,question)"
+            @dragend="questionBankDragEnter($event,question)">
+            {{question.title}}
+            <div class="questionBankQuestionHoverOptionList" v-if="questionBankHoverQuestion==question.questionId">
+              <div class="questionBankQuestionHoverOption" v-if="question.type != 'input' &&   question.type != 'score'"
+                   v-for="(option,index) in question.optionList" :key="oIndex">
+                  {{option.optionName}}
+
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
       <div class="wenjuanEditCenterMid">
         <div id="questionHeader" @click="showHeaderControl = true; questionActive= -1;deleteActive = -1">
@@ -107,9 +136,12 @@
             <el-checkbox class="optionClass" v-if="question.type == 'multipleChoice'"
                          v-for="(option, oIndex) in question.optionList" :key="oIndex"
                          :label="String(option.optionName)"></el-checkbox>
-            <div class="Rating-gray" v-if="question.type=='scoring'">
-              <!--<my-rate  :score.sync='score'/>-->
-              <!--<span v-for="(itemClass,index2) in itemClasses" :class="itemClass" class="star-item" :key="index2"></span>-->
+            <div class="Rating-gray" v-if="question.type=='score'">
+              <score style="width:100%;margin-top:5%;margin-left: 20%" :score.sync="question.optionList[0].optionName" ></score>
+            </div>
+            <!--输入框-->
+            <div v-if="question.type=='input'">
+              <textarea style="height:80px;width: 800px" v-model="question.text"> </textarea>
             </div>
             <!--视频题-->
             <div v-if="question.type=='video'">
@@ -221,7 +253,30 @@
 </template>
 
 <script>
+  import score from './score.vue'
   function test(fn, threshhold) {
+    threshhold || (threshhold = 250);
+    var last,
+      deferTimer;
+    return function () {
+      var context = this;
+
+      var now = +new Date,
+        args = arguments;
+      if (last && now < last + threshhold) {
+        // hold on to it
+        clearTimeout(deferTimer);
+        deferTimer = setTimeout(function () {
+          last = now;
+          fn.apply(context, args);
+        }, threshhold);
+      } else {
+        last = now;
+        fn.apply(context, args);
+      }
+    };
+  }
+  function testBank(fn, threshhold) {
     threshhold || (threshhold = 250);
     var last,
       deferTimer;
@@ -246,6 +301,9 @@
   export default {
     name: 'EditWenjuan',
     wenjuanId: 0,
+    components:{
+      score
+    },
     data () {
       if (this.$router.currentRoute.query.wenjuanId != 0
         && this.$router.currentRoute.query.wenjuanId != undefined) {
@@ -253,9 +311,11 @@
       } else {
         this.getImgUrl();
       }
+      this.getQuestionBank();
       return {
         inserting:false,
         testIndex:0,
+        curScore:5,
         questionActive: -1,
         deleteActive: -1,
         showHeaderControl: true,
@@ -268,6 +328,9 @@
 //        questionListLeftTopY:0,//问题列表左上角纵坐标
 //        questionListRightBottomX:0,//问题列表右下角横坐标
 //        questionListRightBottomY:0,//问题列表右下角横坐标
+        //题库
+        questionBankHoverQuestion:0,
+        questionBank:[],
         //问题类型列表
         questionTypeList:[
           {
@@ -289,6 +352,16 @@
             nameEn:'picture',
             nameCn:'图片题',
             icon:require('../assets/icon/picture.png')
+          },
+          {
+            nameEn:'input',
+            nameCn:'输入框',
+            icon:require('../assets/icon/input.png')
+          },
+          {
+            nameEn:'score',
+            nameCn:'评分题',
+            icon:require('../assets/icon/score.png')
           }
         ],
         wenjuanId: 0,
@@ -344,6 +417,19 @@
 //          console.log(this.questionListRightBottomY)
 //
 //      },
+      getQuestionBank() {
+        this.axios({
+          method: 'GET',
+          url: '/wenjuan/detail',
+          withCredentials: true,
+          params: {
+            wenjuanId: 2707530,
+            type:'edit'
+          }
+        }).then((res) => {
+          this.questionBank = res.data.data.questionVOList;
+        });
+      },
       getWenjuan(wenjuanId) {
         this.axios({
           method: 'GET',
@@ -446,8 +532,29 @@
           this.questionVOList.splice(index,0,multipleChoiceUnnamed);
         }
       },
-      addScore() {
-        this.questionVOList.push(this.scoringQuestionUnnamed);
+      addScore(index) {
+        let scoringQuestionUnnamed = {
+          "questionId": 0,
+          "wenjuanId": this.wenjuanId,
+          "must": 0,
+          "imgUrls": '',
+          "questionIndex": 0,
+          "type": 'score',
+          "title": '评分',
+          "optionList":[
+            {
+              "optionId": 0,
+              "questionId": 0,
+              "optionName": 5,
+              "optionIndex": 0
+            },
+          ]
+        }
+        if (index < 0) {
+          this.questionVOList.push(scoringQuestionUnnamed);
+        } else {
+          this.questionVOList.splice(index,0,scoringQuestionUnnamed);
+        }
       },
       addVideo(index) {
         let videoUnnamed = {
@@ -507,6 +614,38 @@
           this.questionVOList.splice(index,0,pictureUnnamed);
         }
       },
+      addInput(index) {
+        let inputUnnamed = {
+          "questionId": 0,
+          "wenjuanId": this.wenjuanId,
+          "must": 0,
+          "imgUrls": '',
+          "type": 'input',
+          "title": '输入框',
+          "optionList": []
+        };
+        if (index < 0) {
+          this.questionVOList.push(inputUnnamed);
+        } else {
+          this.questionVOList.splice(index,0,inputUnnamed);
+        }
+      },
+      addQuestionFromQuestionBank(question,index) {
+        let questionUnnamed ={
+          "questionId": 0,
+          "wenjuanId": this.wenjuanId,
+          "must": 0,
+          "imgUrls": '',
+          "type": question.type,
+          "title": question.title,
+          optionList:question.optionList
+        }
+        if (index < 0) {
+          this.questionVOList.push(questionUnnamed);
+        } else {
+          this.questionVOList.splice(index,0,questionUnnamed);
+        }
+      },
       imageUploadHasImgJudge(optionList) {
         for (let option of optionList) {
           if(option == '') {
@@ -522,17 +661,7 @@
         let test = window.event;
       },
       questionDragStart(e,questionType) {
-          this.draggingQuestion = questionType;
-        console.log( e.dataTransfer.dropEffect)
-        console.log(e.dataTransfer.effectAllowed)
-
-//        e.DataTransfer.effectAllowed ='move'
-        console.log("鼠标样式修改")
-        console.log( e.dataTransfer.dropEffect)
-        console.log(e.dataTransfer.effectAllowed)
-        document.getElementsByClassName('question')[0].style.cursor= 'pointer';
-        $(".question2").style.cursor= 'pointer';
-
+        this.draggingQuestion = questionType;
       },
       questionDragOn(e) {
 
@@ -543,7 +672,6 @@
         event.dataTransfer.effectAllowed ='move'
       },
       questionDragging(e, questionType) {
-//        e.dataTransfer.dropEffect = 'move'//为需要移动的元素设置dragstart事件
         e.dataTransfer.effectAllowed ='move'
         e.preventDefault()
         let elementArray = document.elementsFromPoint(e.pageX, e.pageY);
@@ -581,11 +709,6 @@
                     let question = userQuestionBoxArray[questionIndex];
                     //quesiton区域左上角Y坐标offsetTop
                     let offsetTop = question.getBoundingClientRect().top;
-//                    let offsetParent = question.offsetParent;
-//                    while (offsetParent !== null) {
-//                      offsetTop += (offsetParent.offsetTop + offsetParent.clientTop);
-//                      offsetParent = offsetParent.offsetParent;
-//                    }
                     //问题区域在网页可见区域中的高度
                     let questionHeight = question.offsetHeight
                     let dom = document.createElement('div');
@@ -601,31 +724,16 @@
                     //如果鼠标当前位置在问题区域上半部分，则将新问题插入当前问题之前
                     let questionElement = document.getElementsByClassName('questionList')[0];
                     if (mouseY < (offsetTop + (questionHeight / 2))){
-//                      && (question.previousElementSibling == null
-//                      || question.previousElementSibling == undefined
-//                      || question.previousElementSibling.className != 'questionInsertingHasQuestion')) {
-//                      console.log(questionIndex);
-//                      console.log(mouseY);
-//                      console.log(offsetTop);
-//                      console.log(questionHeight);
-//                      console.log('之前插入')
                       let questionInsertingHasQuestion = document.getElementsByClassName('questionInsertingHasQuestion');
                       if (questionInsertingHasQuestion.length > 0) {
                         if (questionInsertingHasQuestion[0] != undefined && questionInsertingHasQuestion[0] != null) {
                           questionElement.removeChild(questionInsertingHasQuestion[0]);
                         }
                       }
-//                      console.log(question);
                       questionListElement.insertBefore(dom, question);
-//                      console.log(questionIndex)
-//                      console.log('之前插入完成')
                       break;
                     } else if (mouseY > (offsetTop + (questionHeight / 2))
                       && questionIndex == userQuestionBoxArray.length - 1){
-//                      && (question.nextElementSibling == null
-//                      || question.nextElementSibling == undefined
-//                      || question.nextElementSibling.className != 'questionInsertingHasQuestion')) {
-                      //如果鼠标当前位置在问题区域下半部分，且该问题是最后一个，则将新问题插入当前问题之后
                       let questionInsertingHasQuestion = document.getElementsByClassName('questionInsertingHasQuestion');
                       if (questionInsertingHasQuestion.length > 0) {
                         if (questionInsertingHasQuestion[0] != undefined && questionInsertingHasQuestion[0] != null) {
@@ -637,10 +745,8 @@
                       } else {
                         question.parentNode.insertBefore(dom, question.nextSibling);
                       }
-//                      console.log('插入完成')
                       break;
                     }
-
                   }
                 }
               }
@@ -648,6 +754,141 @@
           }
         }
         this.mouseAfterMoveY = e.pageY;
+      },
+      questionBankDragging(e, questionFromBank) {
+        e.dataTransfer.effectAllowed ='move'
+        e.preventDefault()
+        let elementArray = document.elementsFromPoint(e.pageX, e.pageY);
+        this.mouseY = e.pageY;
+        if (e.pageY != this.mouseAfterMoveY) {
+          for (let element of elementArray) {
+            let classList = element.classList;
+            for (let className of classList) {
+              if (className == 'questionList') {
+                let questionListElement = document.getElementsByClassName('questionList')[0];
+                let userQuestionBoxArray = document.getElementsByClassName('userQuestionBox');
+                let questionInserting = document.getElementsByClassName('questionInserting');
+                //在空白区域上额外显示一个待插入题目
+                if (this.questionVOList.length == 0 && questionInserting.length == 0) {
+                  this.inserting = true;
+                  let dom = document.createElement('div');
+                  dom.className = 'questionInserting';
+                  dom.appendChild(document.createElement('br'));
+                  //题型中文名
+                  dom.appendChild(document.createTextNode(questionFromBank.title));
+                  let noQuestion = document.getElementsByClassName('noQuestion')[0];
+                  questionListElement.insertBefore(dom, noQuestion);
+                }
+                //在已有题目列表中插入新题目
+                if (this.questionVOList.length != 0) {
+                  //当前鼠标位置Y坐标
+                  let mouseY = e.pageY;
+                  //判断鼠标位置Y坐标与每个question区域关系，决定插入位置
+                  for (let questionIndex = 0; questionIndex < userQuestionBoxArray.length; questionIndex++) {
+                    let question = userQuestionBoxArray[questionIndex];
+                    //quesiton区域左上角Y坐标offsetTop
+                    let offsetTop = question.getBoundingClientRect().top;
+                    //问题区域在网页可见区域中的高度
+                    let questionHeight = question.offsetHeight
+                    let dom = document.createElement('div');
+                    dom.className = 'questionInsertingHasQuestion';
+                    dom.appendChild(document.createElement('br'));
+                    //题型中文名
+                    dom.appendChild(document.createTextNode(questionFromBank.title));
+                    //如果鼠标当前位置在问题区域上半部分，则将新问题插入当前问题之前
+                    let questionElement = document.getElementsByClassName('questionList')[0];
+                    if (mouseY < (offsetTop + (questionHeight / 2))){
+                      let questionInsertingHasQuestion = document.getElementsByClassName('questionInsertingHasQuestion');
+                      if (questionInsertingHasQuestion.length > 0) {
+                        if (questionInsertingHasQuestion[0] != undefined && questionInsertingHasQuestion[0] != null) {
+                          questionElement.removeChild(questionInsertingHasQuestion[0]);
+                        }
+                      }
+                      questionListElement.insertBefore(dom, question);
+                      break;
+                    } else if (mouseY > (offsetTop + (questionHeight / 2))
+                      && questionIndex == userQuestionBoxArray.length - 1){
+                      let questionInsertingHasQuestion = document.getElementsByClassName('questionInsertingHasQuestion');
+                      if (questionInsertingHasQuestion.length > 0) {
+                        if (questionInsertingHasQuestion[0] != undefined && questionInsertingHasQuestion[0] != null) {
+                          questionElement.removeChild(questionInsertingHasQuestion[0]);
+                        }
+                      }
+                      if (question.parentNode.lastChild == question) {
+                        question.parentNode.appendChild(dom);
+                      } else {
+                        question.parentNode.insertBefore(dom, question.nextSibling);
+                      }
+                      break;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        this.mouseAfterMoveY = e.pageY;
+      },
+      questionBankDragEnter(e, questionFromBank) {
+
+        this.inserting = false;
+        //删除拖拽过程中创建的dom
+        let questionElement = document.getElementsByClassName('questionList')[0];
+        let questionInserting = document.getElementsByClassName('questionInserting')[0];
+        let questionInsertingHasQuestion = document.getElementsByClassName('questionInsertingHasQuestion')[0];
+        if (questionInserting != undefined && questionInserting != null) {
+          questionElement.removeChild(questionInserting);
+        }
+        if (questionInsertingHasQuestion != undefined && questionInsertingHasQuestion != null) {
+          questionElement.removeChild(questionInsertingHasQuestion);
+        }
+        let elementArray = document.elementsFromPoint(e.pageX, e.pageY);
+        for (let element of elementArray) {
+          let classList = element.classList;
+          for (let className of classList) {
+            if (className =='questionList') {
+              console.log('插入题目')
+              let questionListElement = document.getElementsByClassName('questionList')[0];
+              let userQuestionBoxArray = document.getElementsByClassName('userQuestionBox');
+              //在空白区域插入一个题目
+              if (this.questionVOList.length == 0) {
+                console.log('插入题目')
+                this.addQuestionBankWithIndex(questionFromBank, -1);
+              }
+              //在已有题目列表中插入新题目
+              if (this.questionVOList.length != 0) {
+                console.log('有问题时插入题目')
+                //当前鼠标位置Y坐标
+                let mouseY = e.pageY;
+                //判断鼠标位置Y坐标与每个question区域关系，决定插入位置
+                for (let questionIndex = 0; questionIndex < userQuestionBoxArray.length; questionIndex++) {
+                  let question = userQuestionBoxArray[questionIndex];
+                  //quesiton区域左上角Y坐标offsetTop
+                  let offsetTop = question.getBoundingClientRect().top;
+                  //问题区域在网页可见区域中的高度
+                  let questionHeight = question.offsetHeight
+                  //如果鼠标当前位置在问题区域上半部分，则将新问题插入当前问题之前
+                  if (mouseY < (offsetTop + (questionHeight / 2))){
+                    console.log('之前插入')
+                    this.addQuestionBankWithIndex(questionFromBank, questionIndex);
+                    console.log('之前插入完成')
+                    break;
+                  } else if (mouseY > (offsetTop + (questionHeight / 2))
+                    && questionIndex == userQuestionBoxArray.length - 1){
+                    //如果鼠标当前位置在问题区域下半部分，且该问题是最后一个，则将新问题插入当前问题之后
+                    if (question.parentNode.lastChild == question) {
+                      this.addQuestionBankWithIndex(questionFromBank, -1);
+                    } else {
+                      this.addQuestionBankWithIndex(questionType, questionIndex);
+                    }
+                    console.log('插入完成')
+                    break;
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       uploadWenjuanImg() {
         let file = document.getElementById("uploadWenjuanImg").files[0];
@@ -681,6 +922,26 @@
             break;
           case 'picture':
             this.addPicture(index);
+            break;
+          case 'input':
+            this.addInput(index);
+            break;
+          case 'score':
+            this.addScore(index);
+            break;
+          default:
+            break;
+        }
+      },
+      addQuestionBankWithIndex(questionFromBank, index) {
+        switch (questionFromBank.type) {
+          case 'singleChoice':
+          case 'multipleChoice':
+          case 'video':
+          case 'picture':
+          case 'input':
+          case 'score':
+            this.addQuestionFromQuestionBank(questionFromBank,index);
             break;
           default:
             break;
@@ -722,11 +983,6 @@
                   let question = userQuestionBoxArray[questionIndex];
                   //quesiton区域左上角Y坐标offsetTop
                   let offsetTop = question.getBoundingClientRect().top;
-//                    let offsetParent = question.offsetParent;
-//                    while (offsetParent !== null) {
-//                      offsetTop += (offsetParent.offsetTop + offsetParent.clientTop);
-//                      offsetParent = offsetParent.offsetParent;
-//                    }
                   //问题区域在网页可见区域中的高度
                   let questionHeight = question.offsetHeight
                   //如果鼠标当前位置在问题区域上半部分，则将新问题插入当前问题之前
@@ -750,29 +1006,6 @@
               }
           }
         }
-//        if (window.event.target.classList.indexOf('questionList') > -1) {
-//          console.log('当前鼠标位置')
-//          console.log('在问题列表区域')
-//          console.log('允许释放')
-//        } else {
-//          console.log('鼠标松开了2。。。')
-//          switch (questionType.nameEn) {
-//            case 'singleChoice':
-//              this.addSingleChoice();
-//              break;
-//            case 'multipleChoice':
-//              this.addMultipleChoice();
-//              break;
-//            case 'video':
-//              this.addVideo();
-//              break;
-//            case 'picture':
-//              this.addPicture();
-//              break;
-//            default:
-//              break;
-//          }
-//          console.log('鼠标松开了3。。。')
         }
       },
       editWel() {
@@ -947,6 +1180,7 @@
     },
     created() {
       this.testing = test(this.questionDragging,800)
+      this.testingBank = test(this.questionBankDragging, 800)
     },
     computed: {
 //      MyRate

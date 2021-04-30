@@ -54,6 +54,10 @@
                 <!--<my-rate  :score.sync='score'/>-->
                 <!--<span v-for="(itemClass,index2) in itemClasses" :class="itemClass" class="star-item" :key="index2"></span>-->
               </div>
+              <!--输入框-->
+              <div v-if="question.type=='input'">
+                <textarea style="height:80px;width: 800px" v-model="question.text"> </textarea>
+              </div>
               <!--视频题-->
               <div v-if="question.type=='video'">
                 <div v-if="question.imgUrls!=''" class="videoBox">
@@ -136,6 +140,9 @@
                 <div class="Rating-gray" v-if="question.type=='scoring'">
                   <!--<my-rate  :score.sync='score'/>-->
                   <!--<span v-for="(itemClass,index2) in itemClasses" :class="itemClass" class="star-item" :key="index2"></span>-->
+                </div>
+                <div v-if="question.type=='input'">
+                  <textarea style="height:20px;width: 280px" v-model="question.text"> </textarea>
                 </div>
                 <!--视频题-->
                 <div v-if="question.type=='video'">

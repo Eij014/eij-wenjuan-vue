@@ -58,6 +58,11 @@
               <div class="Rating-gray" v-if="question.type=='scoring'">
 
               </div>
+              <div v-if="question.type=='input'">
+                <textarea @keyup="inputChange(question.questionId,question.type,question.imgUrls)"
+                          @keydown="inputChange(question.questionId,question.type,question.imgUrls)"
+                          style="height:80px;width: 800px" v-model="question.imgUrls"> </textarea>
+              </div>
               <!--视频题-->
               <div v-if="question.type=='video'">
                 <div v-if="question.imgUrls!=''" class="videoBox">
@@ -215,7 +220,7 @@
           url: '/wenjuan/detail',
           params: {
             wenjuanId: wenjuanId,
-            type:'recycle'
+            type:'answer'
           }
         }).then((res) => {
         this.wenjuanId = res.data.data.wenjuanId;
@@ -255,8 +260,9 @@
         let currentQuestionResult = {
               questionId:questionId,
               type:type,
-              optionId:optionId
-            }
+              optionId:optionId,
+              text:''
+        }
         //去重
         let hasQuestion = false
         for (let result of this.resultList) {
@@ -281,7 +287,8 @@
         let currentQuestionResult = {
           questionId:questionId,
           type:type,
-          optionIdList:[optionId]
+          optionIdList:[optionId],
+          text:''
         }
         let hasQuestion = false;
         let hasOption = false;
@@ -312,6 +319,31 @@
           this.resultList.push(currentQuestionResult);
         }
         console.log(this.resultList);
+      },
+      /**
+       * 输入框
+       */
+      inputChange(questionId,type, text) {
+        console.log('触发输入框改变啦' + questionId);
+        let currentQuestionResult = {
+          questionId:questionId,
+          type:type,
+          optionIdList:[],
+          text:text
+        }
+        let hasQuestion = false;
+        for (let questionIndex = 0;questionIndex < this.resultList.length; questionIndex++) {
+          let result = this.resultList[questionIndex];
+          if (result.questionId == questionId) {
+            hasQuestion = true;
+            result.text = text;
+          }
+        }
+        //没有回答过
+        if (!hasQuestion) {
+          this.resultList.push(currentQuestionResult);
+        }
+        console.log(this.resultList)
       },
       submitAnswer() {
         console.log(this.resultList);
