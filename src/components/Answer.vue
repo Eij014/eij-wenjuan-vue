@@ -21,7 +21,7 @@
       <div class="wenjuanPrewCenter">
         <div class="wenjuanPrewCenterMid">
           <div id="questionHeader">
-            <img class="editingWenjuanImg" :src="this.imgUrl"/>
+            <img class="editingWenjuanImg" style="margin-left: 0.1%" :src="this.imgUrl"/>
             <div class="questionWel">
               <div class="wenjuanTitleCenter" style="font-size: large">{{wenjuanTitle}}</div>
               <p></p>
@@ -55,8 +55,8 @@
                               @change="multipleRadioChange(question.questionId,question.type,option.optionId)">
                 </el-checkbox>
               </el-radio-group>
-              <div class="Rating-gray" v-if="question.type=='scoring'">
-
+              <div class="Rating-gray" v-if="question.type=='score'" @click="scoreChange(question.questionId, question.type, question.optionList[0].optionName)">
+                <score   style="width:100%;margin-top:5%;margin-left: 20%" :score.sync="question.optionList[0].optionName" ></score>
               </div>
               <div v-if="question.type=='input'">
                 <textarea @keyup="inputChange(question.questionId,question.type,question.imgUrls)"
@@ -180,11 +180,14 @@
 </template>
 
 <script>
-
+  import score from './score.vue'
   export default {
     name: 'Answer',
     wenjuanId: 0,
     equipment:0,
+    components:{
+      score
+    },
     data () {
       var str = window.location.href.split('/');
       this.wenjuanId = str[5];
@@ -324,7 +327,6 @@
        * 输入框
        */
       inputChange(questionId,type, text) {
-        console.log('触发输入框改变啦' + questionId);
         let currentQuestionResult = {
           questionId:questionId,
           type:type,
@@ -337,6 +339,34 @@
           if (result.questionId == questionId) {
             hasQuestion = true;
             result.text = text;
+          }
+        }
+        //没有回答过
+        if (!hasQuestion) {
+          this.resultList.push(currentQuestionResult);
+        }
+        console.log(this.resultList)
+      },
+      /**
+       * 评分
+       */
+      scoreChange(questionId,type, optionName) {
+        console.log('触发评分改变啦');
+
+
+        console.log(optionName)
+        let currentQuestionResult = {
+          questionId:questionId,
+          type:type,
+          optionIdList:[],
+          text:optionName
+        }
+        let hasQuestion = false;
+        for (let questionIndex = 0;questionIndex < this.resultList.length; questionIndex++) {
+          let result = this.resultList[questionIndex];
+          if (result.questionId == questionId) {
+            hasQuestion = true;
+            result.text = optionName;
           }
         }
         //没有回答过

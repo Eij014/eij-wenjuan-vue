@@ -1,6 +1,6 @@
 <template>
 
-  <div style="font-size: medium" id="wenjuanEdit">
+  <div style="font-size: medium;" id="wenjuanEdit">
     <div id="wenjuanEditHeader">
       <div class="headerLeft">
         <img style="margin-right: 5%" @click="goHome()" src="../assets/icon/arrowLeft.png"/>
@@ -66,7 +66,7 @@
                 <img class="imgCenter" src="../assets/icon/picture.png"/>
                 <div style="font-size: medium">图片题</div>
               </div>
-              <div @click="addScore()" class="question3" draggable="true"
+              <div @click="addScore(-1)" class="question3" draggable="true"
                    @dragstart="questionDragStart($event,questionTypeList[5])"
                    @drag="testing($event,questionTypeList[5])"
                    @dragend="questionDragEnter($event,questionTypeList[5])">
@@ -76,8 +76,13 @@
             </div>
          </div>
         <div class="questionBank">
-          <div class="wenjuanEditCenterLeftSubTitle" style="margin-left: 7%">题库</div>
-          <div class="questionBankQuestion" v-for="(question, index) in questionBank" :key="index"
+          <div style="display: flex" @click="openQuestionBank ? openQuestionBank=false : openQuestionBank = true">
+            <div class="wenjuanEditCenterLeftSubTitle" style="margin-left: 7%">题库</div>
+            <img v-if="openQuestionBank" style="width: 12px;height: 12px;margin-top: 3%;margin-left: 70%" src="../assets/icon/down.png">
+            <img v-if="!openQuestionBank" style="width: 12px;height: 12px;margin-top: 3%;margin-left: 70%" src="../assets/icon/top.png">
+          </div>
+
+          <div v-if="openQuestionBank" class="questionBankQuestion" v-for="(question, index) in questionBank" :key="index"
                draggable="true"
             @mouseover="questionBankHoverQuestion=question.questionId"
             @mouseleave="questionBankHoverQuestion=0"
@@ -94,7 +99,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
       <div class="wenjuanEditCenterMid">
@@ -315,6 +319,7 @@
       return {
         inserting:false,
         testIndex:0,
+
         curScore:5,
         questionActive: -1,
         deleteActive: -1,
@@ -324,11 +329,8 @@
         mouseY:0,//鼠标纵坐标
         mouseAfterMoveX:0,//鼠标移动后松开时横坐标
         mouseAfterMoveY:0,//鼠标移动后松开时纵坐标坐标
-//        questionListLeftTopX:0,//问题列表左上角横坐标
-//        questionListLeftTopY:0,//问题列表左上角纵坐标
-//        questionListRightBottomX:0,//问题列表右下角横坐标
-//        questionListRightBottomY:0,//问题列表右下角横坐标
         //题库
+        openQuestionBank:false,
         questionBankHoverQuestion:0,
         questionBank:[],
         //问题类型列表
@@ -374,49 +376,6 @@
       }
     },
     methods: {
-//      init() {
-//          let questionListElement = document.getElementById('questionList');
-//          console.log(questionListElement);
-//          //问题列表的左上角坐标
-//          //1.x坐标
-//          let offsetLeft = questionListElement.offsetLeft;
-//          let offsetParent = questionListElement.offsetParent;
-//        console.log('testInit()1')
-//          while (offsetParent !== null) {
-//            offsetLeft += offsetParent.offsetLeft;
-//            offsetParent = offsetParent.offsetParent;
-//          }
-//
-//          //2.坐标
-//          let offsetTop = questionListElement.offsetTop;
-//          offsetParent = questionListElement.offsetParent;
-//          while (offsetParent !== null){
-//            offsetTop += (offsetParent.offsetTop+offsetParent.clientTop);
-//            offsetParent = offsetParent.offsetParent;
-//          }
-//          this.questionListLeftTopX = offsetLeft;
-//          this.questionListLeftTopY = offsetTop;
-//          //问题列表的右下角坐标
-//          //1.问题列表高、宽
-//          let width = questionListElement.offsetWidth;
-//          let height = questionListElement.offsetHeight;
-//          this.questionListRightBottomX = this.questionListLeftTopX + width;
-//          this.questionListRightBottomY = this.questionListLeftTopY + height;
-//
-//          console.log('左上角X坐标=')
-//          console.log(this.questionListLeftTopX)
-//          console.log('左上角Y坐标=')
-//          console.log(this.questionListLeftTopY)
-//          console.log('问题列表宽度')
-//          console.log(width);
-//          console.log('问题列表高度')
-//          console.log(height);
-//          console.log('右下角X坐标=')
-//          console.log(this.questionListRightBottomX)
-//          console.log('右下角Y坐标=')
-//          console.log(this.questionListRightBottomY)
-//
-//      },
       getQuestionBank() {
         this.axios({
           method: 'GET',
@@ -448,13 +407,11 @@
       });
       },
       getImgUrl() {
-        console.log(this.$cookies.get("userToken"));
         this.axios({
           method: 'GET',
           url: '/wenjuan/init/img/url',
           withCredentials: true
         }).then((res) => {
-          console.log('获取图片');
         this.imgUrl = res.data.data;
       })
         ;
@@ -847,17 +804,14 @@
           let classList = element.classList;
           for (let className of classList) {
             if (className =='questionList') {
-              console.log('插入题目')
               let questionListElement = document.getElementsByClassName('questionList')[0];
               let userQuestionBoxArray = document.getElementsByClassName('userQuestionBox');
               //在空白区域插入一个题目
               if (this.questionVOList.length == 0) {
-                console.log('插入题目')
                 this.addQuestionBankWithIndex(questionFromBank, -1);
               }
               //在已有题目列表中插入新题目
               if (this.questionVOList.length != 0) {
-                console.log('有问题时插入题目')
                 //当前鼠标位置Y坐标
                 let mouseY = e.pageY;
                 //判断鼠标位置Y坐标与每个question区域关系，决定插入位置
@@ -869,9 +823,7 @@
                   let questionHeight = question.offsetHeight
                   //如果鼠标当前位置在问题区域上半部分，则将新问题插入当前问题之前
                   if (mouseY < (offsetTop + (questionHeight / 2))){
-                    console.log('之前插入')
                     this.addQuestionBankWithIndex(questionFromBank, questionIndex);
-                    console.log('之前插入完成')
                     break;
                   } else if (mouseY > (offsetTop + (questionHeight / 2))
                     && questionIndex == userQuestionBoxArray.length - 1){
@@ -881,7 +833,6 @@
                     } else {
                       this.addQuestionBankWithIndex(questionType, questionIndex);
                     }
-                    console.log('插入完成')
                     break;
                   }
                 }
@@ -965,17 +916,14 @@
           let classList = element.classList;
           for (let className of classList) {
             if (className =='questionList') {
-              console.log('插入题目')
               let questionListElement = document.getElementsByClassName('questionList')[0];
               let userQuestionBoxArray = document.getElementsByClassName('userQuestionBox');
               //在空白区域插入一个题目
               if (this.questionVOList.length == 0) {
-                console.log('插入题目')
                 this.addQuestionWithIndex(questionType, -1);
               }
               //在已有题目列表中插入新题目
               if (this.questionVOList.length != 0) {
-                console.log('有问题时插入题目')
                 //当前鼠标位置Y坐标
                 let mouseY = e.pageY;
                 //判断鼠标位置Y坐标与每个question区域关系，决定插入位置
@@ -987,9 +935,7 @@
                   let questionHeight = question.offsetHeight
                   //如果鼠标当前位置在问题区域上半部分，则将新问题插入当前问题之前
                   if (mouseY < (offsetTop + (questionHeight / 2))){
-                    console.log('之前插入')
                     this.addQuestionWithIndex(questionType, questionIndex);
-                    console.log('之前插入完成')
                     break;
                   } else if (mouseY > (offsetTop + (questionHeight / 2))
                     && questionIndex == userQuestionBoxArray.length - 1){
@@ -999,7 +945,6 @@
                     } else {
                       this.addQuestionWithIndex(questionType, questionIndex);
                     }
-                    console.log('插入完成')
                     break;
                   }
                 }
@@ -1120,8 +1065,6 @@
       });
       },
       goHome() {
-        console.log("文件夹id = ")
-        console.log(this.$router.currentRoute.query.folderId)
         if (this.$router.currentRoute.query.folderId != 0
             && this.$router.currentRoute.query.folderId != undefined) {
           this.$router.push({path: '/folder'})
@@ -1180,7 +1123,7 @@
     },
     created() {
       this.testing = test(this.questionDragging,800)
-      this.testingBank = test(this.questionBankDragging, 800)
+      this.testingBank = testBank(this.questionBankDragging, 800)
     },
     computed: {
 //      MyRate

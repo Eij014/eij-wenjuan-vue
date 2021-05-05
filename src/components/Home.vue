@@ -315,7 +315,8 @@
               pageSize: 6,
               keywords:this.keywords==null ? '':this.keywords,
               folderId:0,
-              type:'self'
+              type:'self',
+              status:'全部'
             },
             header:{
               'Content-Type':'application/json'
@@ -565,7 +566,7 @@
             this.$router.push({path: '/template'});
             break;
           case 'resultAnalysis':
-            this.$router.push({path:'/resultAnalysis'});
+            this.$router.push({path:'/result'});
             break;
         }
       }

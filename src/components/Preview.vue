@@ -50,9 +50,8 @@
               <el-checkbox class="optionClass" v-if="question.type == 'multipleChoice'"
                            v-for="(option, oIndex) in question.optionList" :key="oIndex"
                            :label="String(option.optionName)"></el-checkbox>
-              <div class="Rating-gray" v-if="question.type=='scoring'">
-                <!--<my-rate  :score.sync='score'/>-->
-                <!--<span v-for="(itemClass,index2) in itemClasses" :class="itemClass" class="star-item" :key="index2"></span>-->
+              <div class="Rating-gray" v-if="question.type=='score'">
+                <score style="width:100%;margin-top:5%;margin-left: 20%" :score.sync="question.optionList[0].optionName" ></score>
               </div>
               <!--输入框-->
               <div v-if="question.type=='input'">
@@ -137,9 +136,8 @@
                 <el-checkbox class="optionClass" v-if="question.type == 'multipleChoice'"
                              v-for="(option, oIndex) in question.optionList" :key="oIndex"
                              :label="String(option.optionName)"></el-checkbox>
-                <div class="Rating-gray" v-if="question.type=='scoring'">
-                  <!--<my-rate  :score.sync='score'/>-->
-                  <!--<span v-for="(itemClass,index2) in itemClasses" :class="itemClass" class="star-item" :key="index2"></span>-->
+                <div class="Rating-gray" v-if="question.type=='score'">
+                  <score style="width:100%;margin-top:5%;margin-left: 20%" :score.sync="question.optionList[0].optionName" ></score>
                 </div>
                 <div v-if="question.type=='input'">
                   <textarea style="height:20px;width: 280px" v-model="question.text"> </textarea>
@@ -179,10 +177,13 @@
 </template>
 
 <script>
-
+  import score from './score.vue'
   export default {
     name: 'PreviewWenjuan',
     wenjuanId: 0,
+    components:{
+      score
+    },
     data () {
       if (this.$router.currentRoute.query.wenjuanId != 0
         && this.$router.currentRoute.query.wenjuanId != undefined) {

@@ -35,6 +35,7 @@
   import RecycleProcess from '@/components/RecycleProcess'
   import RecycleForm from '@/components/RecycleForm'
   import RecycleCross from '@/components/RecycleCross'
+  import RecycleCronbach from '@/components/RecycleCronbach'
   import * as echarts from 'echarts'
   export default {
     name: 'ResultAnalysis',
@@ -68,6 +69,12 @@
             menuName: '交叉分析',
             componentName:'RecycleCross',
             componentEn:RecycleCross
+          },
+          {
+            icon: require('../assets/icon/cronbach.png'),
+            menuName: '信度分析',
+            componentName:'RecycleCronbach',
+            componentEn:RecycleCronbach
           }
         ],
 
