@@ -79,13 +79,8 @@
         </div>
       </div>
       <div style="display: flex;margin-left:78%">
-        <vxe-button class="otherOperate" size="small">
-          <template #default>更多操作</template>
-          <template #dropdowns>
-            <vxe-button type="text">新建文件夹</vxe-button>
-          </template>
-        </vxe-button>
-        <vxe-input class="wenjuanSearch" v-model="keywords" placeholder="输入文件夹名搜索" type="search"
+
+        <vxe-input v-if="currentFolderId ==0" class="wenjuanSearch" v-model="keywords" placeholder="输入文件夹名搜索" type="search"
                    @keyup.enter="wenjuanListFn(1,$event)" @search-click="wenjuanListFn(1,$event)"></vxe-input>
       </div>
       <vxe-modal v-model="folderIsShow" title="新建文件夹" width="600" height="200" show-zoom resize remember>

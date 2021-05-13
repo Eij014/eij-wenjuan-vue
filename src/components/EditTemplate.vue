@@ -76,7 +76,7 @@
           </div>
         </div>
         <div class="questionBankTemplate">
-          <div style="display: flex" @click="openQuestionBank ? openQuestionBank=false : openQuestionBank = true">
+          <div v-if="committer != 'admin'" style="display: flex" @click="openQuestionBank ? openQuestionBank=false : openQuestionBank = true">
             <div class="wenjuanEditCenterLeftSubTitle" style="margin-left: 7%">题库</div>
             <img v-if="openQuestionBank" style="width: 12px;height: 12px;margin-top: 3%;margin-left: 70%" src="../assets/icon/down.png">
             <img v-if="!openQuestionBank" style="width: 12px;height: 12px;margin-top: 3%;margin-left: 70%" src="../assets/icon/top.png">

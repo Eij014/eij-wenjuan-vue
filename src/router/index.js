@@ -16,6 +16,7 @@ import Template from '@/components/Template'
 import EditTemplate from '@/components/EditTemplate'
 import Result from '@/components/Result'
 import RecycleCronbach from '@/components/RecycleCronbach'
+import RecycleData from '@/components/RecycleData'
 Vue.use(Router)
 
 //解决它的提示是 避免到当前位置的冗余导航。 简单来说就是重复触发了同一个路由。
@@ -108,6 +109,11 @@ export default new Router({
       path:'/resultAnalysis/cronbach',
       name:'cronbach',
       component: RecycleCronbach
+    },
+    {
+      path:'/resultAnalysis/recycleData',
+      name:'recycleData',
+      component: RecycleData
     }
   ]
 })

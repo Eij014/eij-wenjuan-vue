@@ -68,12 +68,6 @@
     <div class=systemCenter>
       <div id="myWenjuan">我的问卷</div>
       <div style="display: flex;margin-left:78%">
-        <vxe-button class="otherOperate" size="small">
-          <template #default>更多操作</template>
-          <template #dropdowns>
-            <vxe-button type="text">新建文件夹</vxe-button>
-          </template>
-        </vxe-button>
         <vxe-input class="wenjuanSearch" v-model="keywords" placeholder="输入问卷名搜索" type="search"
                    @keyup.enter="wenjuanListFn(1,$event)" @search-click="wenjuanListFn(1,$event)"></vxe-input>
       </div>

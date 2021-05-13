@@ -111,6 +111,9 @@
               questionIdXList:this.questionX
             }
           }).then((res) => {
+            if(this.crossAnalysisVOList.length > 1) {
+              this.crossAnalysisVOList.pop();
+            }
             this.crossAnalysisVOList.push(
             {
               questionX:'',

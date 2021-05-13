@@ -717,8 +717,7 @@ li{
   border-right: solid #ACC0D8 1px;
 }
 .editingWenjuanImg {
-  margin-top: -20%;
-  margin-left: -2%;
+
   width: 840px;
   height: 200px;
 }
@@ -1179,7 +1178,7 @@ textarea{
   /*left: 100px;*/
   /*right: 100px;*/
   margin-left: 35.5%;
-  margin-top: -0.1%;
+  margin-top: -2%;
 }
 #publishCenter{
   margin: 0 auto;
@@ -1473,7 +1472,7 @@ width: 400px;
   height: 160px;
 }
 .wenjuanSearch{
-
+  margin-left: 40%;
 }
 .otherOperate{
   margin-right: 4%;
